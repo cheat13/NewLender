@@ -1,0 +1,29 @@
+<ion-header>
+
+  <ion-navbar color="dark">
+    <ion-title>Edit {{item.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div style="text-align: center" padding>
+    <ion-icon name="color-wand" style="zoom:6; "></ion-icon>
+  </div>
+
+  <ion-item>
+    <ion-input type="text" placeholder="{{item.name}}" [(ngModel)]="item.name"></ion-input>
+  </ion-item>
+  <br>
+  <ion-item>
+    <ion-input type="number" placeholder="{{item.amount}}" [(ngModel)]="item.amount"></ion-input>
+  </ion-item>
+  <br>
+
+  <div padding>
+    <button ion-button block (click)="EditItem()">Edit</button>
+  </div>
+
+</ion-content>

@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar color="dark">
+    <ion-title>Edit Locker {{locker.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div style="text-align: center" padding>
+    <img src="../../assets/imgs/locker1.png">
+  </div>
+
+  <ion-item>
+    <ion-input type="text" placeholder="{{locker.name}}" [(ngModel)]="locker.name"></ion-input>
+  </ion-item>
+  <br>
+  <ion-item>
+    <ion-input type="text" placeholder="{{locker.cate}}" [(ngModel)]="locker.cate"></ion-input>
+  </ion-item>
+  <br>
+
+  <div padding>
+    <button ion-button block (click)="EditLocker()">Edit</button>
+  </div>
+
+
+</ion-content>

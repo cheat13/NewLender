@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar color="dark">
+    <ion-title>Create Locker</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div style="text-align: center" padding>
+    <img src="../../assets/imgs/locker1.png">
+  </div>
+
+  <ion-item>
+    <ion-input type="text" placeholder="ชื่อ" [(ngModel)]="locker.name"></ion-input>
+  </ion-item>
+  <br>
+  <ion-item>
+    <ion-input type="text" placeholder="หมวดหมู่" [(ngModel)]="locker.cate"></ion-input>
+  </ion-item>
+  <br>
+
+  <div padding>
+    <button ion-button block (click)="CreateLocker()">Create</button>
+  </div>
+  
+
+</ion-content>

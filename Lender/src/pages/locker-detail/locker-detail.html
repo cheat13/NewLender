@@ -1,0 +1,43 @@
+<ion-header>
+
+  <ion-navbar color="dark">
+    <ion-title>Locker {{ locker.name }}</ion-title>
+  </ion-navbar>
+  
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-9>
+        <h6>Name</h6>
+      </ion-col>
+      <ion-col col-3>
+        <h6>Amount</h6>
+      </ion-col>
+    </ion-row>
+
+    <button ion-item *ngFor="let i of items" (click)="ItemDetail(i.id)" (press)="press(i.id,i.name)">
+      <ion-row>
+        <ion-col col-9>
+          {{i.name}}
+        </ion-col>
+        <ion-col col-3 style="text-align: center">
+          {{i.amount}}/{{i.totalAmount}}
+        </ion-col>
+      </ion-row>
+    </button>
+
+  </ion-grid>
+
+  <div padding>
+    <button ion-button outline block color="dark" (click)="AddItem()">
+      <ion-icon name="add-circle" style="zoom: 1.5;"></ion-icon>
+    </button>
+  </div>
+
+  
+
+</ion-content>

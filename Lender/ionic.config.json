@@ -1,0 +1,7 @@
+{
+  "name": "Lender",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

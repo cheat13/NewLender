@@ -1,0 +1,26 @@
+<ion-header>
+
+  <ion-navbar color="dark">
+    <ion-title>Item Detail</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div style="text-align: center" padding>
+    <ion-icon name="color-wand" style="zoom:6; "></ion-icon>
+  </div>
+
+  <ion-grid padding>
+    <ion-row style="padding-left: 40px">
+      <h5>Name : {{item.name}}</h5>
+    </ion-row>
+    <br>
+    <ion-row style="padding-left: 40px">
+      <h5>Amount : {{item.amount}}/{{item.totalAmount}}</h5>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>LENDER</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+</ion-content>
+
+<ion-footer>
+  <ion-grid style="background-color: #f53d3d ;height: 65px; text-align: center; padding-top: 2px; ">
+    <ion-row>
+      <ion-col col-4>
+        <button style="background-color: unset;color: white" (click)="KeyList()">
+          <h5>Key</h5>
+        </button>
+      </ion-col>
+      <ion-col col-4>
+        <button style="background-color: unset" (click)="Borrow()">
+          <img src="../../assets/imgs/QR3.png" style="width: 55px">
+        </button>
+      </ion-col>
+      <ion-col col-4>
+        <button style="background-color: unset;color: white">
+          <h5>Return</h5>
+        </button>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
