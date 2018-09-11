@@ -23,6 +23,12 @@ export class Locker {
     cate: string
 }
 
+export class Borrow {
+    name: string
+    amount: number
+    borrow: number
+}
+
 export class GlobalVarible {
     static host: string = "http://kritna.azurewebsites.net";
 
