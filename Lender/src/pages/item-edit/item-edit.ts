@@ -18,6 +18,7 @@ import { Item, GlobalVarible } from '../../app/models';
 export class ItemEditPage {
 
   item: Item = new Item;
+  newAmount: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient) {
   }
@@ -32,9 +33,12 @@ export class ItemEditPage {
         this.item = data;
         console.log(this.item)
       });
+    this.newAmount = this.item.amount;
   }
 
   EditItem() {
+    this.item.amount = this.newAmount;
+    this.item.totalAmount += (this.newAmount - this.item.amount);
     this.http.post(GlobalVarible.host + "/api/Lender/EditItem", this.item)
       .subscribe(data => {
         this.navCtrl.pop();

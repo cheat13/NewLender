@@ -46,9 +46,6 @@ export class LoginPage {
           GlobalVarible.lender = this.lender;
           this.navCtrl.push(HomePage);
         });
-
-
-      
     }
     else {
       const toast = this.toastCtrl.create({

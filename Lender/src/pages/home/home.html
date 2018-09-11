@@ -9,6 +9,29 @@
 
 <ion-content padding>
 
+  <div style="text-align: center;padding-top: 15px" *ngIf="status == false"><h5><i>ไม่มีรายการยืม</i></h5></div>
+  <div style="text-align: center;padding-top: 15px" *ngIf="status == true"><h5>รายการที่ยืม</h5></div>
+
+  <ion-row *ngIf="status == true">
+    <ion-col col-9>
+      <h6>Name</h6>
+    </ion-col>
+    <ion-col col-3>
+      <h6>Amount</h6>
+    </ion-col>
+  </ion-row>
+
+  <ion-item *ngFor="let item of items">
+    <ion-row *ngFor="let lender of item.lenders">
+      <ion-col col-9>
+        {{item.name}}
+      </ion-col>
+      <ion-col col-3 style="text-align: center">
+        {{lender.borrow}}
+      </ion-col>
+    </ion-row>
+  </ion-item>
+
 </ion-content>
 
 <ion-footer>
@@ -20,7 +43,7 @@
         </button>
       </ion-col>
       <ion-col col-4>
-        <button style="background-color: unset" (click)="Borrow()">
+        <button style="background-color: unset" (click)="Borrow('d1b8bed9-55c8-4f6b-ab7c-d99cf6206543')">
           <img src="../../assets/imgs/QR3.png" style="width: 55px">
         </button>
       </ion-col>

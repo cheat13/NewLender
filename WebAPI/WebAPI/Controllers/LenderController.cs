@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
             var database = mongoClient.GetDatabase("kritna");
             Locker = database.GetCollection<Locker>("Lender_Locker");
             Item = database.GetCollection<Item>("Lender_Item");
-            Lender = database.GetCollection<Lender>("Lender_User");
+            Lender = database.GetCollection<Lender>("Lender_Lender");
         }
 
 
@@ -75,6 +75,15 @@ namespace WebAPI.Controllers
             return items;
         }
 
+        [HttpGet("[action]/{lenderID}")]
+        public IEnumerable<Item> ListItemsLender(string lenderID)
+        {
+            var items = GetAllItem();
+            var seletedItems = items.Where(x =>  x.Lenders?.Any(it => it.Id == lenderID && it.Borrow != 0) ?? false);
+
+            return seletedItems;
+        }
+
         [HttpGet("[action]/{Locker}")]
         public IEnumerable<Item> ListItems(string Locker)
         {
@@ -93,17 +102,13 @@ namespace WebAPI.Controllers
         public void CreateItem([FromBody]Item item)
         {
             item.Id = Guid.NewGuid().ToString();
-            item.TotalAmount = item.Amount;
-            item.BAmount = 0;
-            item.Status = true;
-            item.Borrow = false;
+            item.Amount = item.TotalAmount;
             Item.InsertOne(item);
         }
 
         [HttpPost("[action]")]
         public void EditItem([FromBody]Item item)
         {
-            item.TotalAmount = item.Amount;
             Item.ReplaceOne(x => x.Id == item.Id, item);
         }
 

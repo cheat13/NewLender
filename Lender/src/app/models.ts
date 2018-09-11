@@ -3,18 +3,18 @@ import { HttpHeaders } from "@angular/common/http";
 export class Item {
     id: string
     name: string
-    amount: number
-    bamount: number
-    totalAmount: number
     locker: string
-    status: boolean
-    borrow: boolean
+    amount: number
+    totalAmount: number
+    lenders: Lender[]
+
 }
 
 export class Lender {
-    id: string;
+    id: string
+    friendID: string
     name: string
-    items: Item[]
+    borrow: number
 }
 
 export class Locker {
@@ -31,4 +31,5 @@ export class GlobalVarible {
     };
 
     static lender: Lender;
+
 }
