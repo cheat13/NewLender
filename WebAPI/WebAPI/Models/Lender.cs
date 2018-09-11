@@ -8,9 +8,7 @@ namespace WebAPI.Models
     public class Lender
     {
         public string Id { get; set; }
-        public string FriendId { get; set; }
         public string Name { get; set; }
-        public int Borrow { get; set; }
     }
 
 

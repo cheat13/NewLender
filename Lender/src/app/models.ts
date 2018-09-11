@@ -6,15 +6,12 @@ export class Item {
     locker: string
     amount: number
     totalAmount: number
-    lenders: Lender[]
-
+    borrow: number
 }
 
 export class Lender {
     id: string
-    friendID: string
     name: string
-    borrow: number
 }
 
 export class Locker {
@@ -24,9 +21,16 @@ export class Locker {
 }
 
 export class Borrow {
-    name: string
-    amount: number
-    borrow: number
+    id: string
+    lockerId: string
+    lockerName: string
+    lockerCate: string
+    lenderId: string
+    lenderName: string
+    buddyId: string
+    buddyName: string
+    date: string
+    items: Item[]
 }
 
 export class GlobalVarible {

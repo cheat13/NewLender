@@ -39,7 +39,6 @@ export class LoginPage {
                   .subscribe(data => {
                     this.lender = data;
                     GlobalVarible.lender = this.lender;
-                    this.navCtrl.push(HomePage);
                   });
               });
           }

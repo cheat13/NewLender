@@ -37,8 +37,8 @@ export class ItemEditPage {
   }
 
   EditItem() {
-    this.item.amount = this.newAmount;
     this.item.totalAmount += (this.newAmount - this.item.amount);
+    this.item.amount = this.newAmount;
     this.http.post(GlobalVarible.host + "/api/Lender/EditItem", this.item)
       .subscribe(data => {
         this.navCtrl.pop();

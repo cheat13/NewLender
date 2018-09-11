@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { LockerListPage } from '../locker-list/locker-list';
-import { GlobalVarible, Item } from '../../app/models';
+import { GlobalVarible, Item, Borrow } from '../../app/models';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { KeyListPage } from '../key-list/key-list';
 
@@ -13,29 +13,29 @@ import { KeyListPage } from '../key-list/key-list';
 export class HomePage {
 
   barcodeData: string;
-  items: Item[] = [];
+  borrows: Borrow[] = [];
   status: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner, public http: HttpClient) {
 
   }
 
-  Borrow(LockerID: string) {
-    this.navCtrl.push(LockerListPage, { _locker: LockerID });
-  }
-
   ionViewDidEnter() {
-    this.http.get<Item[]>(GlobalVarible.host + "/api/Lender/ListItemsLender/" + GlobalVarible.lender.id)
+    this.http.get<Borrow[]>(GlobalVarible.host + "/api/Lender/GetBorrowLender/" + GlobalVarible.lender.id)
       .subscribe(data => {
-        this.items = data;
-        if (this.items.length == 0) {
+        this.borrows = data;
+        console.log(this.borrows);
+        if (this.borrows.length == 0) {
           this.status = false;
         }
         else {
           this.status = true;
         }
-        console.log(this.items)
       });
+  }
+
+  Borrow(LockerID: string) {
+    this.navCtrl.push(LockerListPage, { _locker: LockerID });
   }
 
   // Borrow() {
@@ -51,6 +51,10 @@ export class HomePage {
 
   KeyList() {
     this.navCtrl.push(KeyListPage);
+  }
+
+  BorrowItemDetail(LockerID: string){
+
   }
 
 

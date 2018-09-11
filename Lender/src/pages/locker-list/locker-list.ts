@@ -12,8 +12,8 @@ export class LockerListPage {
 
   items: Item[] = [];
   locker: Locker = new Locker;
-  lenders: Lender[] = [];
-  borrows: Borrow[] = [];
+  borrow: Borrow = new Borrow;
+  status: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient) {
 
@@ -24,8 +24,6 @@ export class LockerListPage {
   }
 
   ionViewDidEnter() {
-
-
     this.http.get<Locker>(GlobalVarible.host + "/api/Lender/GetLocker/" + this.navParams.data._locker)
       .subscribe(data => {
         this.locker = data;
@@ -33,25 +31,32 @@ export class LockerListPage {
           .subscribe(data => {
             this.items = data;
             console.log(this.items);
-            
-            for (let i = 0; i < this.items.length; i++) {
-              this.lenders[i] = GlobalVarible.lender;
-              this.borrows[i].name = this.items[i].name;
-              this.borrows[i].amount = this.items[i].amount;
-              this.borrows[i].borrow = this.lenders[i].borrow;
+            if (this.items.length == 0) {
+              this.status = false;
             }
-            console.log(this.borrows);
-
-
+            else {
+              this.status = true;
+            }
           });
       });
-
-
   }
-
 
   Cancel() {
     this.navCtrl.pop();
+  }
+
+  Borrow() {
+    this.borrow.lockerId = this.locker.id;
+    this.borrow.lockerName = this.locker.name;
+    this.borrow.lockerCate = this.locker.cate;
+    this.borrow.lenderId = GlobalVarible.lender.id;
+    this.borrow.lenderName = GlobalVarible.lender.name;
+    this.borrow.items = this.items;
+    
+    this.http.post(GlobalVarible.host + "/api/Lender/CreateBorrow", this.borrow)
+      .subscribe(data => {
+        this.navCtrl.pop();
+      });
   }
 
 

@@ -9,28 +9,41 @@
 
 <ion-content padding>
 
-  <div style="text-align: center;padding-top: 15px" *ngIf="status == false"><h5><i>ไม่มีรายการ</i></h5></div>
-  <div style="text-align: center;padding-top: 15px" *ngIf="status == true"><h5>รายการที่ยืม</h5></div>
+  <div style="text-align: center;padding-top: 15px" *ngIf="status == false">
+    <h5><i>ไม่มีรายการ</i></h5>
+  </div>
+  <div style="text-align: center;padding-top: 15px" *ngIf="status == true">
+    <h5>รายการที่ยืม</h5>
+  </div>
 
-  <ion-row *ngIf="status == true">
-    <ion-col col-9>
+  <ion-row *ngIf="status == true" padding>
+    <ion-col col-4>
       <h6>Name</h6>
     </ion-col>
-    <ion-col col-3>
+    <ion-col col-4 style="text-align: center">
       <h6>Amount</h6>
+    </ion-col>
+    <ion-col col-4 style="text-align: right">
+      <h6>Date</h6>
     </ion-col>
   </ion-row>
 
-  <ion-item *ngFor="let item of items">
-    <ion-row *ngFor="let lender of item.lenders">
-      <ion-col col-9>
-        {{item.name}}
-      </ion-col>
-      <ion-col col-3 style="text-align: center">
-        {{lender.borrow}}
-      </ion-col>
-    </ion-row>
-  </ion-item>
+  <div *ngFor="let borrow of borrows">
+    <button ion-item *ngFor="let item of borrow.items" (click)="BorrowItemDetail(borrow.id)">
+      <ion-row>
+        <ion-col col-4>
+          {{item.name}}
+        </ion-col>
+        <ion-col col-4 style="text-align: center">
+          {{item.borrow}}
+        </ion-col>
+        <ion-col col-4 style="text-align: right">
+          {{borrow.date | date : 'dd MMM HH:mm' }}
+        </ion-col>
+      </ion-row>
+    </button>
+  </div>
+
 
 </ion-content>
 
