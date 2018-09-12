@@ -1,7 +1,7 @@
 import { ItemEditPage } from './../item-edit/item-edit';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ToastController, ActionSheetController } from 'ionic-angular';
-import { Locker, GlobalVarible, Item } from '../../app/models';
+import { Locker, GlobalVarible, Item, Item } from '../../app/models';
 import { HttpClient } from '@angular/common/http';
 import { ItemAddPage } from '../item-add/item-add';
 import { ItemDetailPage } from '../item-detail/item-detail';
@@ -40,7 +40,7 @@ export class LockerDetailPage {
     this.navCtrl.push(ItemDetailPage, { _id: id });
   }
 
-  press(ItemID: string, ItemName: string) {
+  press(item: Item) {
 
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
@@ -49,7 +49,7 @@ export class LockerDetailPage {
           icon: 'build',
           handler: () => {
             console.log('Destructive clicked');
-            this.navCtrl.push(ItemEditPage, { _id: ItemID });
+            this.navCtrl.push(ItemEditPage, { _id: item.id });
 
           }
         }, {
@@ -58,28 +58,40 @@ export class LockerDetailPage {
           handler: () => {
             console.log('Archive clicked');
 
-            const confirm = this.alertCtrl.create({
-              title: 'Delete ' + ItemName + ' ?',
-              buttons: [
-                {
-                  text: 'Cancel',
-                  handler: () => {
-                    console.log('Disagree clicked');
+            if (item.amount == item.totalAmount) {
+              const confirm = this.alertCtrl.create({
+                title: 'Delete ' + item.name + ' ?',
+                buttons: [
+                  {
+                    text: 'Cancel',
+                    handler: () => {
+                      console.log('Disagree clicked');
+                    }
+                  },
+                  {
+                    text: 'Confirm',
+                    handler: () => {
+                      console.log('Agree clicked');
+                      this.http.post(GlobalVarible.host + "/api/Lender/DeleteItem/" + item.id, {})
+                        .subscribe(data => {
+                          this.ionViewDidEnter()
+                        });
+                    }
                   }
-                },
-                {
-                  text: 'Confirm',
-                  handler: () => {
-                    console.log('Agree clicked');
-                    this.http.post(GlobalVarible.host + "/api/Lender/DeleteItem/" + ItemID, {})
-                      .subscribe(data => {
-                        this.ionViewDidEnter()
-                      });
-                  }
-                }
-              ]
-            });
-            confirm.present();
+                ]
+              });
+              confirm.present();
+            }
+
+            else {
+              const toast = this.toastCtrl.create({
+                message: 'Can not Delete.',
+                duration: 3000
+              });
+              toast.present();
+            }
+
+            
           }
         },
 

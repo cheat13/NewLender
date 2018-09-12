@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar color="dark">
+  <ion-navbar color="danger">
     <ion-title>BorrowDetail</ion-title>
   </ion-navbar>
 
@@ -9,9 +9,8 @@
 
 <ion-content>
 
-  <ion-grid padding>
 
-    <ion-grid>
+    <ion-grid padding style="background-color: lightgray">
 
       <ion-row style="text-align: center;padding-top: 15px">
         <ion-col col-12 *ngIf="borrow.lenderId == lender.id">
@@ -70,26 +69,30 @@
     </ion-grid>
 
 
-    <ion-row style="padding-left: 20px;padding-top: 15px">
-      <ion-col col-8>
-        <h6>Name</h6>
-      </ion-col>
-      <ion-col col-4 style="text-align: center;">
-        <h6>Amount</h6>
-      </ion-col>
-    </ion-row>
+    <ion-grid padding>
 
-    <ion-item *ngFor="let item of borrow.items">
-      <ion-row style="padding-left: 20px">
-        <ion-col col-9>
-          {{item.name}}
+      <ion-row style="padding-left: 20px;padding-top: 15px">
+        <ion-col col-6>
+          <h6>Name</h6>
         </ion-col>
-        <ion-col col-3 style="text-align: center;">
-          {{item.borrowAmount}}
+        <ion-col col-6 style="text-align: center;">
+          <h6>Amount</h6>
         </ion-col>
       </ion-row>
-    </ion-item>
 
-  </ion-grid>
+      <div *ngFor="let _item of borrow.items">
+        <ion-item>
+          <ion-row style="padding-left: 20px;padding-right: 20px">
+            <ion-col col-8>
+              {{_item.name}}
+            </ion-col>
+            <ion-col col-4 style="text-align: center;">
+              {{_item.borrowAmount}}
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </div>
+    </ion-grid>
+
 
 </ion-content>

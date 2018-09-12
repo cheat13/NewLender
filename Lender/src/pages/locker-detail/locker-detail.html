@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar color="dark">
+  <ion-navbar color="lender">
     <ion-title>Locker {{ locker.name }}</ion-title>
   </ion-navbar>
   
@@ -19,7 +19,7 @@
       </ion-col>
     </ion-row>
 
-    <button ion-item *ngFor="let i of items" (click)="ItemDetail(i.id)" (press)="press(i.id,i.name)">
+    <button ion-item *ngFor="let i of items" (click)="ItemDetail(i.id)" (press)="press(i)">
       <ion-row>
         <ion-col col-9>
           {{i.name}}

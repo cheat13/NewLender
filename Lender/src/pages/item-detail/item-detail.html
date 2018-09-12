@@ -1,26 +1,90 @@
 <ion-header>
 
-  <ion-navbar color="dark">
+  <ion-navbar color="lender">
     <ion-title>Item Detail</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-  <div style="text-align: center" padding>
-    <ion-icon name="color-wand" style="zoom:6; "></ion-icon>
-  </div>
+  <ion-grid padding style="background-color: lightgrey">
 
-  <ion-grid padding>
+    <div style="text-align: center" padding>
+      <ion-icon name="color-wand" style="zoom:6; "></ion-icon>
+    </div>
+
+    <ion-grid style="padding-left: 40px">
+      <ion-row>
+        <ion-col col-3>
+          <h6>Name</h6>
+        </ion-col>
+        <ion-col col-9>
+          <h6>: {{item.name}}</h6>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-3>
+          <h6>Amount</h6>
+        </ion-col>
+        <ion-col col-9>
+          <h6>: {{item.amount}}/{{item.totalAmount}}</h6>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- 
     <ion-row style="padding-left: 40px">
       <h5>Name : {{item.name}}</h5>
     </ion-row>
     <br>
     <ion-row style="padding-left: 40px">
       <h5>Amount : {{item.amount}}/{{item.totalAmount}}</h5>
+    </ion-row> -->
+  </ion-grid>
+
+  <ion-grid>
+
+    <ion-row style="padding-left: 20px;padding-right: 20px;padding-top: 10px">
+      <ion-col col-12 style="text-align: center">
+        <h5><i>History</i></h5>
+      </ion-col>
+      <ion-col col-4>
+        <h6>Lender</h6>
+      </ion-col>
+      <ion-col col-4 style="text-align: center">
+        <h6>Amount</h6>
+      </ion-col>
+      <ion-col col-4 style="text-align: right">
+        <h6>Date</h6>
+      </ion-col>
     </ion-row>
+
+    <div *ngFor="let borrow of borrows">
+      <div *ngIf="borrow.lockerId == item.locker && borrow.buddyId != null">
+        <div *ngFor="let _item of borrow.items">
+          <div *ngIf="_item.id == item.id">
+            <ion-item>
+              <ion-row style="padding-left: 20px">
+                <ion-col col-4>
+                  {{borrow.lenderName}}
+                </ion-col>
+                <ion-col col-4 style="text-align: center">
+                  {{_item.borrowAmount}}
+                </ion-col>
+                <ion-col col-4 style="text-align: right">
+                  {{borrow.date | date : 'dd MMM HH:mm' }}
+                </ion-col>
+              </ion-row>
+            </ion-item>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
   </ion-grid>
 
 </ion-content>
