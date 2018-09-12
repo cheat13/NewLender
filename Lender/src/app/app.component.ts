@@ -1,4 +1,3 @@
-import { LoginPage } from './../pages/login/login';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -9,6 +8,7 @@ import { LockerPage } from '../pages/locker/locker';
 import { LockerAddPage } from '../pages/locker-add/locker-add';
 import { ItemAddPage } from '../pages/item-add/item-add';
 import { KeyListPage } from '../pages/key-list/key-list';
+import { LoginPage } from '../pages/login/login';
 
 @Component({
   templateUrl: 'app.html'

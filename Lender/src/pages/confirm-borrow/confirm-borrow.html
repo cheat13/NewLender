@@ -1,13 +1,13 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="dark">
     <ion-title>ConfirmBorrow</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
   <ion-grid padding>
 
@@ -15,9 +15,26 @@
       <ion-col col-12>
         <h5>รายการยืมของ</h5>
       </ion-col>
+
     </ion-row>
 
     <ion-row style="padding-left: 20px">
+      <ion-col col-12>
+        <h6><i>Lender : {{borrow.lenderName}}</i></h6>
+      </ion-col>
+      <ion-col col-12>
+        <h6><i>Locker : {{borrow.lockerName}}</i></h6>
+      </ion-col>
+      <ion-col col-12>
+        <h6><i>Category : {{borrow.lockerCate}}</i></h6>
+      </ion-col>
+      <ion-col col-12>
+        <h6><i>Date : {{borrow.date | date : 'dd MMM HH:mm' }}</i></h6>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row style="padding-left: 20px;padding-top: 10px">
       <ion-col col-8>
         <h6>Name</h6>
       </ion-col>
@@ -29,16 +46,15 @@
     <ion-item *ngFor="let item of borrow.items">
       <ion-row style="padding-left: 20px">
         <ion-col col-9>
-          <h6>{{item.name}}</h6>
+          {{item.name}}
         </ion-col>
         <ion-col col-3 style="text-align: center;">
-          <h6>{{item.borrowAmount}}</h6>
+          {{item.borrowAmount}}
         </ion-col>
       </ion-row>
     </ion-item>
 
   </ion-grid>
-
 </ion-content>
 
 <ion-footer>

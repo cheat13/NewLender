@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { LockerListPage } from '../locker-list/locker-list';
-import { GlobalVarible, Item, Borrow, Locker } from '../../app/models';
+import { GlobalVarible, Item, Borrow, Locker, Lender } from '../../app/models';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { KeyListPage } from '../key-list/key-list';
 import { ConfirmBorrowPage } from '../confirm-borrow/confirm-borrow';
 import { RequestBorrowPage } from '../request-borrow/request-borrow';
+import { BorrowDetailPage } from '../borrow-detail/borrow-detail';
 
 @Component({
   selector: 'page-home',
@@ -17,13 +18,16 @@ export class HomePage {
   barcodeData: string;
   borrows: Borrow[] = [];
   status: boolean;
-  locker: Locker;
+  budder: boolean = false;
+  locker: Locker = new Locker;
+  lender: Lender = new Lender;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner, public http: HttpClient) {
 
   }
 
   ionViewDidEnter() {
+    this.lender = GlobalVarible.lender;
     this.http.get<Borrow[]>(GlobalVarible.host + "/api/Lender/GetBorrowLender/" + GlobalVarible.lender.id)
       .subscribe(data => {
         this.borrows = data;
@@ -32,7 +36,18 @@ export class HomePage {
           this.status = false;
         }
         else {
-          this.status = true;
+          for (let i = 0; i < this.borrows.length; i++) {
+            if (this.borrows[i].lenderId == GlobalVarible.lender.id) {
+              this.status = true;
+              break;
+            }
+          }
+          for (let i = 0; i < this.borrows.length; i++) {
+            if (this.borrows[i].buddyId == GlobalVarible.lender.id) {
+              this.budder = true;
+              break;
+            }
+          }
         }
       });
   }
@@ -55,8 +70,6 @@ export class HomePage {
               this.navCtrl.push(ConfirmBorrowPage, { _borrowId: barcodeData.text });
             }
           });
-
-        // this.navCtrl.push(LockerListPage, { _lockerId: barcodeData.text });
       }
     }).catch(err => {
       console.log('Error', err);
@@ -65,10 +78,6 @@ export class HomePage {
 
   KeyList() {
     this.navCtrl.push(KeyListPage);
-  }
-
-  BorrowItemDetail(LockerID: string) {
-
   }
 
   SendRequest(id: string) {
@@ -80,5 +89,7 @@ export class HomePage {
       });
   }
 
-
+  BorrowDetail(borrow: Borrow) {
+    this.navCtrl.push(BorrowDetailPage, { _borrow: borrow });
+  }
 }

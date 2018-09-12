@@ -1,0 +1,95 @@
+<ion-header>
+
+  <ion-navbar color="dark">
+    <ion-title>BorrowDetail</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-grid padding>
+
+    <ion-grid>
+
+      <ion-row style="text-align: center;padding-top: 15px">
+        <ion-col col-12 *ngIf="borrow.lenderId == lender.id">
+          <h4>รายการที่ยืม</h4>
+          <ion-icon name="ios-basket-outline"></ion-icon>
+        </ion-col>
+        <ion-col col-12 *ngIf="borrow.buddyId == lender.id">
+          <h4>รายการที่เป็นพยาน</h4>
+          <ion-icon name="contacts"></ion-icon>
+        </ion-col>
+      </ion-row>
+
+      <ion-grid style="padding-left: 20px;padding-top: 15px">
+        <ion-row *ngIf="borrow.lenderId == lender.id">
+          <ion-col col-4>
+            <h6>Buddy</h6>
+          </ion-col>
+          <ion-col col-8>
+            <h6>: {{borrow.buddyName}}</h6>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="borrow.buddyId == lender.id">
+          <ion-col col-4>
+            <h6>Lender</h6>
+          </ion-col>
+          <ion-col col-8>
+            <h6>: {{borrow.lenderName}}</h6>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4>
+            <h6>Locker</h6>
+          </ion-col>
+          <ion-col col-8>
+            <h6>: {{borrow.lockerName}}</h6>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4>
+            <h6>Category</h6>
+          </ion-col>
+          <ion-col col-8>
+            <h6>: {{borrow.lockerCate}}</h6>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4>
+            <h6>Date</h6>
+          </ion-col>
+          <ion-col col-8>
+            <h6>: {{borrow.date | date : 'dd MMM HH:mm' }}</h6>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-grid>
+
+
+    <ion-row style="padding-left: 20px;padding-top: 15px">
+      <ion-col col-8>
+        <h6>Name</h6>
+      </ion-col>
+      <ion-col col-4 style="text-align: center;">
+        <h6>Amount</h6>
+      </ion-col>
+    </ion-row>
+
+    <ion-item *ngFor="let item of borrow.items">
+      <ion-row style="padding-left: 20px">
+        <ion-col col-9>
+          {{item.name}}
+        </ion-col>
+        <ion-col col-3 style="text-align: center;">
+          {{item.borrowAmount}}
+        </ion-col>
+      </ion-row>
+    </ion-item>
+
+  </ion-grid>
+
+</ion-content>

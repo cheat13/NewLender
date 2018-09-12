@@ -12,57 +12,111 @@
   <div style="text-align: center;padding-top: 15px" *ngIf="status == false">
     <h5><i>ไม่มีรายการ</i></h5>
   </div>
-  <div style="text-align: center;padding-top: 15px" *ngIf="status == true">
-    <h5>รายการที่ยืม</h5>
-  </div>
 
-  <ion-row *ngIf="status == true" padding>
-    <ion-col col-4>
-      <h6>Name</h6>
-    </ion-col>
-    <ion-col col-4 style="text-align: center">
-      <h6>Amount</h6>
-    </ion-col>
-    <ion-col col-4 style="text-align: right">
-      <h6>Date</h6>
-    </ion-col>
-  </ion-row>
+  <ion-grid *ngIf="status == true" style="padding-top: 15px;padding-bottom: 30px" no-padding>
 
-  <div *ngFor="let borrow of borrows">
-    <div *ngIf="borrow.buddyId != null">
-      <button ion-item *ngFor="let item of borrow.items" (click)="BorrowItemDetail(borrow.id)">
-        <ion-row>
-          <ion-col col-4>
-            {{item.name}}
-          </ion-col>
-          <ion-col col-4 style="text-align: center">
-            {{item.borrowAmount}}
-          </ion-col>
-          <ion-col col-4 style="text-align: right">
-            {{borrow.date | date : 'dd MMM HH:mm' }}
-          </ion-col>
-        </ion-row>
-      </button>
+    <div style="text-align: center">
+      <h6>รายการที่ยืม</h6>
+      <ion-icon name="ios-basket-outline"></ion-icon>
     </div>
 
-    <div *ngIf="borrow.buddyId == null">
-      <button ion-item *ngFor="let item of borrow.items" (click)="SendRequest(borrow.id)">
-        <ion-row>
-          <ion-col col-4>
-            {{item.name}}
-          </ion-col>
-          <ion-col col-4 style="text-align: center">
-            {{item.borrowAmount}}
-          </ion-col>
-          <ion-col col-4 style="text-align: right">
-            <i>wait</i>
-          </ion-col>
-        </ion-row>
-      </button>
+    <ion-row padding>
+      <ion-col col-4>
+        <h6>Name</h6>
+      </ion-col>
+      <ion-col col-4 style="text-align: center">
+        <h6>Amount</h6>
+      </ion-col>
+      <ion-col col-4 style="text-align: right">
+        <h6>Date</h6>
+      </ion-col>
+    </ion-row>
+
+    <div *ngFor="let borrow of borrows">
+      <div *ngIf="borrow.lenderId == lender.id">
+        <div *ngIf="borrow.buddyId != null">
+          <button ion-item *ngFor="let item of borrow.items" (click)="BorrowDetail(borrow)">
+            <ion-row>
+              <ion-col col-4>
+                {{item.name}}
+              </ion-col>
+              <ion-col col-4 style="text-align: center">
+                {{item.borrowAmount}}
+              </ion-col>
+              <ion-col col-4 style="text-align: right">
+                {{borrow.date | date : 'dd MMM HH:mm' }}
+              </ion-col>
+            </ion-row>
+          </button>
+        </div>
+
+        <div *ngIf="borrow.buddyId == null">
+          <button ion-item *ngFor="let item of borrow.items" (click)="SendRequest(borrow.id)">
+            <ion-row>
+              <ion-col col-4>
+                {{item.name}}
+              </ion-col>
+              <ion-col col-4 style="text-align: center">
+                {{item.borrowAmount}}
+              </ion-col>
+              <ion-col col-4 style="text-align: right">
+                <i>wait</i>
+              </ion-col>
+            </ion-row>
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
+  </ion-grid>
+
+
+  <ion-grid *ngIf="budder == true" style="padding-top: 15px" no-padding>
+
+    <div style="text-align: center;">
+      <h6>รายการที่เป็นพยาน</h6>
+      <ion-icon name="contacts"></ion-icon>
+
+    </div>
+
+    <ion-row padding>
+      <ion-col col-4>
+        <h6>Name</h6>
+      </ion-col>
+      <ion-col col-4 style="text-align: center">
+        <h6>Amount</h6>
+      </ion-col>
+      <ion-col col-4 style="text-align: right">
+        <h6>Lender</h6>
+      </ion-col>
+    </ion-row>
+
+    <div *ngFor="let borrow of borrows">
+      <div *ngIf="borrow.buddyId == lender.id">
+        <button ion-item *ngFor="let item of borrow.items" (click)="BorrowDetail(borrow)">
+          <ion-row>
+            <ion-col col-4>
+              {{item.name}}
+            </ion-col>
+            <ion-col col-4 style="text-align: center">
+              {{item.borrowAmount}}
+            </ion-col>
+            <ion-col col-4 style="text-align: right">
+              {{borrow.lenderName}}
+            </ion-col>
+          </ion-row>
+        </button>
+      </div>
+    </div>
+
+
+
+  </ion-grid>
 
 </ion-content>
+
+
+
+
 
 <ion-footer>
   <ion-grid style="background-color: #f53d3d ;height: 65px; text-align: center; padding-top: 2px; ">
