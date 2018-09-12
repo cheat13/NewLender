@@ -29,21 +29,38 @@
   </ion-row>
 
   <div *ngFor="let borrow of borrows">
-    <button ion-item *ngFor="let item of borrow.items" (click)="BorrowItemDetail(borrow.id)">
-      <ion-row>
-        <ion-col col-4>
-          {{item.name}}
-        </ion-col>
-        <ion-col col-4 style="text-align: center">
-          {{item.borrowAmount}}
-        </ion-col>
-        <ion-col col-4 style="text-align: right">
-          {{borrow.date | date : 'dd MMM HH:mm' }}
-        </ion-col>
-      </ion-row>
-    </button>
-  </div>
+    <div *ngIf="borrow.buddyId != null">
+      <button ion-item *ngFor="let item of borrow.items" (click)="BorrowItemDetail(borrow.id)">
+        <ion-row>
+          <ion-col col-4>
+            {{item.name}}
+          </ion-col>
+          <ion-col col-4 style="text-align: center">
+            {{item.borrowAmount}}
+          </ion-col>
+          <ion-col col-4 style="text-align: right">
+            {{borrow.date | date : 'dd MMM HH:mm' }}
+          </ion-col>
+        </ion-row>
+      </button>
+    </div>
 
+    <div *ngIf="borrow.buddyId == null">
+      <button ion-item *ngFor="let item of borrow.items" (click)="SendRequest(borrow.id)">
+        <ion-row>
+          <ion-col col-4>
+            {{item.name}}
+          </ion-col>
+          <ion-col col-4 style="text-align: center">
+            {{item.borrowAmount}}
+          </ion-col>
+          <ion-col col-4 style="text-align: right">
+            <i>wait</i>
+          </ion-col>
+        </ion-row>
+      </button>
+    </div>
+  </div>
 
 </ion-content>
 

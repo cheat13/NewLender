@@ -204,15 +204,16 @@ namespace WebAPI.Controllers
             borrow.Items = borrowItems.ToList();
             borrow.Date = DateTime.UtcNow;
             
-            Borrow.ReplaceOne(x => x.Id == borrow.Id, borrow);
+            Borrow.InsertOne(borrow);
 
-            return GetBorrow(borrow.Id);
+            return borrow;
         }
 
         [HttpPost("[action]")]
         public void ConfirmBorrow([FromBody]Borrow borrow)
         {
             var borrowItems = borrow.Items.ToArray();
+            borrow.Date = DateTime.UtcNow;
 
             var items = ListItems(borrow.LockerId).ToArray();
 

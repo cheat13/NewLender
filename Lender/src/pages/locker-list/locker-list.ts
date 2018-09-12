@@ -44,22 +44,23 @@ export class LockerListPage {
     this.navCtrl.pop();
   }
 
-  Borrow() {
-    this.borrow.items = this.items;
-    this.http.post(GlobalVarible.host + "/api/Lender/CreateBorrow", this.borrow)
-      .subscribe(data => {
-        this.navCtrl.pop();
-      });
-  }
-
   // Borrow() {
   //   this.borrow.items = this.items;
-  //   this.http.post<Borrow>(GlobalVarible.host + "/api/Lender/CreateBorrow", this.borrow)
+  //   this.http.post(GlobalVarible.host + "/api/Lender/CreateBorrow", this.borrow)
   //     .subscribe(data => {
-  //       this.borrow = data;
-  //       this.navCtrl.push(RequestBorrowPage, { _borrow: this.borrow })
+  //       this.navCtrl.pop();
   //     });
   // }
+
+  Borrow() {
+    this.borrow.items = this.items;
+    this.http.post<Borrow>(GlobalVarible.host + "/api/Lender/CreateBorrow", this.borrow)
+      .subscribe(data => {
+        this.borrow = data;
+        console.log(this.borrow)
+        this.navCtrl.push(RequestBorrowPage, { _borrow: this.borrow })
+      });
+  }
 
 
 

@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Borrow, GlobalVarible } from '../../app/models';
 
 /**
  * Generated class for the ConfirmBorrowPage page.
@@ -15,11 +17,36 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ConfirmBorrowPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  borrow: Borrow = new Borrow;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConfirmBorrowPage');
+  }
+
+  ionViewDidEnter() {
+    this.http.get<Borrow>(GlobalVarible.host + "/api/Lender/GetBorrow/" + this.navParams.data._borrowId)
+      .subscribe(data => {
+        this.borrow = data;
+      });
+  }
+
+  CancelBorrow() {
+    this.http.post(GlobalVarible.host + "/api/Lender/CancelBorrow", this.borrow)
+      .subscribe(data => {
+        this.navCtrl.pop();
+      });
+  }
+
+  ConfirmBorrow() {
+    this.borrow.buddyId = GlobalVarible.lender.id;
+    this.borrow.buddyName = GlobalVarible.lender.name;
+    this.http.post(GlobalVarible.host + "/api/Lender/ConfirmBorrow", this.borrow)
+      .subscribe(data => {
+        this.navCtrl.pop();
+      });
   }
 
 }
