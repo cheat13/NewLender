@@ -6,7 +6,7 @@ export class Item {
     locker: string
     amount: number
     totalAmount: number
-    borrow: number
+    borrowAmount: number
 }
 
 export class Lender {

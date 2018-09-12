@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { LockerListPage } from '../locker-list/locker-list';
-import { GlobalVarible, Item, Borrow } from '../../app/models';
+import { GlobalVarible, Item, Borrow, Locker } from '../../app/models';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { KeyListPage } from '../key-list/key-list';
+import { ConfirmBorrowPage } from '../confirm-borrow/confirm-borrow';
 
 @Component({
   selector: 'page-home',
@@ -15,6 +16,7 @@ export class HomePage {
   barcodeData: string;
   borrows: Borrow[] = [];
   status: boolean;
+  locker: Locker;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner, public http: HttpClient) {
 
@@ -35,14 +37,25 @@ export class HomePage {
   }
 
   Borrow(LockerID: string) {
-    this.navCtrl.push(LockerListPage, { _locker: LockerID });
+    this.navCtrl.push(LockerListPage, { _lockerId: LockerID });
   }
 
   // Borrow() {
   //   this.barcodeScanner.scan().then(barcodeData => {
-  //     console.log('Barcode data', barcodeData);
   //     if (barcodeData.text != undefined) {
-  //       this.navCtrl.push(LockerListPage, { _locker: barcodeData.text });
+
+  //       this.http.get<Locker>(GlobalVarible.host + "/api/Lender/GetLocker/" + barcodeData.text)
+  //         .subscribe(data => {
+  //           this.locker = data;
+  //           if (this.locker != null) {
+  //             this.navCtrl.push(LockerListPage, { _lockerId: barcodeData.text });
+  //           }
+  //           else {
+  //             this.navCtrl.push(ConfirmBorrowPage, { _borrowId: barcodeData.text });
+  //           }
+  //         });
+
+  //       // this.navCtrl.push(LockerListPage, { _lockerId: barcodeData.text });
   //     }
   //   }).catch(err => {
   //     console.log('Error', err);
@@ -53,7 +66,7 @@ export class HomePage {
     this.navCtrl.push(KeyListPage);
   }
 
-  BorrowItemDetail(LockerID: string){
+  BorrowItemDetail(LockerID: string) {
 
   }
 

@@ -19,6 +19,8 @@ import { LockerAddPage } from '../pages/locker-add/locker-add';
 import { LockerEditPage } from '../pages/locker-edit/locker-edit';
 import { ItemEditPage } from '../pages/item-edit/item-edit';
 import { KeyListPage } from '../pages/key-list/key-list';
+import { ConfirmBorrowPage } from '../pages/confirm-borrow/confirm-borrow';
+import { RequestBorrowPage } from '../pages/request-borrow/request-borrow';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { KeyListPage } from '../pages/key-list/key-list';
     ItemEditPage,
     LockerListPage,
     LoginPage,
-    KeyListPage
+    KeyListPage,
+    ConfirmBorrowPage,
+    RequestBorrowPage
   ],
   imports: [
     BrowserModule,
@@ -53,7 +57,9 @@ import { KeyListPage } from '../pages/key-list/key-list';
     ItemEditPage,
     LockerListPage,
     LoginPage,
-    KeyListPage
+    KeyListPage,
+    ConfirmBorrowPage,
+    RequestBorrowPage
   ],
   providers: [
     StatusBar,
