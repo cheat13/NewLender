@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { LockerListPage } from '../locker-list/locker-list';
-import { GlobalVarible, Item, Borrow, Locker, Lender } from '../../app/models';
+import { GlobalVarible, Item, BorrowList, Locker, Lender, ReturnList } from '../../app/models';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { KeyListPage } from '../key-list/key-list';
 import { ConfirmBorrowPage } from '../confirm-borrow/confirm-borrow';
 import { RequestBorrowPage } from '../request-borrow/request-borrow';
 import { BorrowDetailPage } from '../borrow-detail/borrow-detail';
+import { ConfirmReturnPage } from '../confirm-return/confirm-return';
+import { RequestReturnPage } from '../request-return/request-return';
 
 @Component({
   selector: 'page-home',
@@ -16,22 +18,24 @@ import { BorrowDetailPage } from '../borrow-detail/borrow-detail';
 export class HomePage {
 
   barcodeData: string;
-  borrows: Borrow[] = [];
+  borrows: BorrowList[] = [];
   status: boolean;
+  statusReturn: boolean;
   budder: boolean = false;
   locker: Locker = new Locker;
   lender: Lender = new Lender;
+  borrowList: BorrowList = new BorrowList;
+  returnList: ReturnList[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner, public http: HttpClient) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, private barcodeScanner: BarcodeScanner, public http: HttpClient) {
 
   }
 
   ionViewDidEnter() {
     this.lender = GlobalVarible.lender;
-    this.http.get<Borrow[]>(GlobalVarible.host + "/api/Lender/GetBorrowLender/" + GlobalVarible.lender.id)
+    this.http.get<BorrowList[]>(GlobalVarible.host + "/api/Lender/GetBorrowLender/" + GlobalVarible.lender.id)
       .subscribe(data => {
         this.borrows = data;
-        console.log(this.borrows);
         if (this.borrows.length == 0) {
           this.status = false;
         }
@@ -49,6 +53,16 @@ export class HomePage {
             }
           }
         }
+        this.http.get<ReturnList[]>(GlobalVarible.host + "/api/Lender/GetReturnListReturner/" + GlobalVarible.lender.id)
+          .subscribe(data => {
+            this.returnList = data;
+            if (this.returnList.length == 0) {
+              this.statusReturn = false;
+            }
+            else {
+              this.statusReturn = true;
+            }
+          });
       });
   }
 
@@ -67,7 +81,16 @@ export class HomePage {
               this.navCtrl.push(LockerListPage, { _lockerId: barcodeData.text });
             }
             else {
-              this.navCtrl.push(ConfirmBorrowPage, { _borrowId: barcodeData.text });
+              this.http.get<BorrowList>(GlobalVarible.host + "/api/Lender/GetBorrow/" + barcodeData.text)
+                .subscribe(data => {
+                  this.borrowList = data;
+                  if (this.borrowList != null) {
+                    this.navCtrl.push(ConfirmBorrowPage, { _borrowId: barcodeData.text });
+                  }
+                  else {
+                    this.navCtrl.push(ConfirmReturnPage, { _returnId: barcodeData.text });
+                  }
+                });
             }
           });
       }
@@ -82,14 +105,33 @@ export class HomePage {
 
   SendRequest(id: string) {
 
-    this.http.get<Borrow>(GlobalVarible.host + "/api/Lender/GetBorrow/" + id)
+    this.http.get<BorrowList>(GlobalVarible.host + "/api/Lender/GetBorrow/" + id)
       .subscribe(data => {
         var borrow = data;
         this.navCtrl.push(RequestBorrowPage, { _borrow: borrow })
       });
   }
 
-  BorrowDetail(borrow: Borrow) {
+  BorrowDetail(borrow: BorrowList) {
     this.navCtrl.push(BorrowDetailPage, { _borrow: borrow });
+  }
+
+  ReturnDetail(returnList: ReturnList) {
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data', barcodeData);
+      if (barcodeData.text == returnList.lockerId) {
+        this.navCtrl.push(RequestReturnPage, { _returnList: returnList });
+      }
+      else{
+        const toast = this.toastCtrl.create({
+          message: 'Worng locker. Please scan locker '+ returnList.lockerName,
+          duration: 3000
+        });
+        toast.present();
+      }
+
+    }).catch(err => {
+      console.log('Error', err);
+    });
   }
 }

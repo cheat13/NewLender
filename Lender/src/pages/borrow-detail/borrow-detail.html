@@ -1,43 +1,43 @@
 <ion-header>
 
-  <ion-navbar color="danger">
-    <ion-title>BorrowDetail</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content>
-
-
+    <ion-navbar color="dark">
+      <ion-title>BorrowDetail</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content>
+  
+  
     <ion-grid padding style="background-color: lightgray">
-
+  
       <ion-row style="text-align: center;padding-top: 15px">
-        <ion-col col-12 *ngIf="borrow.lenderId == lender.id">
-          <h4>รายการที่ยืม</h4>
+        <ion-col col-12 *ngIf="borrowList.lenderId == lender.id">
+          <h4><i>รายการที่ยืม</i></h4>
           <ion-icon name="ios-basket-outline"></ion-icon>
         </ion-col>
-        <ion-col col-12 *ngIf="borrow.buddyId == lender.id">
-          <h4>รายการที่เป็นพยาน</h4>
+        <ion-col col-12 *ngIf="borrowList.buddyId == lender.id">
+          <h4><i>รายการที่เป็นพยาน</i></h4>
           <ion-icon name="contacts"></ion-icon>
         </ion-col>
       </ion-row>
-
+  
       <ion-grid style="padding-left: 20px;padding-top: 15px">
-        <ion-row *ngIf="borrow.lenderId == lender.id">
+        <ion-row *ngIf="borrowList.lenderId == lender.id">
           <ion-col col-4>
             <h6>Buddy</h6>
           </ion-col>
           <ion-col col-8>
-            <h6>: {{borrow.buddyName}}</h6>
+            <h6>: {{borrowList.buddyName}}</h6>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="borrow.buddyId == lender.id">
+        <ion-row *ngIf="borrowList.buddyId == lender.id">
           <ion-col col-4>
             <h6>Lender</h6>
           </ion-col>
           <ion-col col-8>
-            <h6>: {{borrow.lenderName}}</h6>
+            <h6>: {{borrowList.lenderName}}</h6>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -45,7 +45,7 @@
             <h6>Locker</h6>
           </ion-col>
           <ion-col col-8>
-            <h6>: {{borrow.lockerName}}</h6>
+            <h6>: {{borrowList.lockerName}}</h6>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -53,7 +53,7 @@
             <h6>Category</h6>
           </ion-col>
           <ion-col col-8>
-            <h6>: {{borrow.lockerCate}}</h6>
+            <h6>: {{borrowList.lockerCate}}</h6>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -61,38 +61,62 @@
             <h6>Date</h6>
           </ion-col>
           <ion-col col-8>
-            <h6>: {{borrow.date | date : 'dd MMM HH:mm' }}</h6>
+            <h6>: {{borrowList.date | date : 'dd MMM HH:mm' }}</h6>
           </ion-col>
         </ion-row>
       </ion-grid>
-
+  
     </ion-grid>
-
-
+  
+  
     <ion-grid padding>
-
+  
       <ion-row style="padding-left: 20px;padding-top: 15px">
-        <ion-col col-6>
+        <ion-col col-4>
           <h6>Name</h6>
         </ion-col>
-        <ion-col col-6 style="text-align: center;">
+        <ion-col col-3 style="text-align: center;">
           <h6>Amount</h6>
         </ion-col>
+        <ion-col col-5 style="text-align: center;">
+          <h6>Return</h6>
+        </ion-col>
       </ion-row>
-
-      <div *ngFor="let _item of borrow.items">
-        <ion-item>
-          <ion-row style="padding-left: 20px;padding-right: 20px">
-            <ion-col col-8>
-              {{_item.name}}
-            </ion-col>
-            <ion-col col-4 style="text-align: center;">
-              {{_item.borrowAmount}}
-            </ion-col>
-          </ion-row>
-        </ion-item>
+  
+      <div *ngFor="let _item of borrowList.items">
+        <div *ngIf="_item.borrowAmount != 0">
+          <ion-item>
+            <ion-row style="align-items: center;padding-left: 20px">
+              <ion-col col-5>
+                {{_item.name}}
+              </ion-col>
+              <ion-col col-3>
+                {{_item.borrowAmount}}
+              </ion-col>
+              <ion-col col-4 style="text-align: right">
+                <ion-list>
+                  <ion-item>
+                    <ion-input type="number" placeholder="{{_item.returnAmount}}" [(ngModel)]="_item.returnAmount"></ion-input>
+                  </ion-item>
+                </ion-list>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+        </div>
       </div>
     </ion-grid>
-
-
-</ion-content>
+  
+  
+  </ion-content>
+  
+  <ion-footer>
+    <ion-grid no-padding style="  text-align: center">
+      <ion-row>
+        <ion-col col-12 style="background-color: rgb(250, 115, 7)">
+          <button style="background-color: unset;color: white" (click)="Return()">
+            <h5>Return</h5>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>

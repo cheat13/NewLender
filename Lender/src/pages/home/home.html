@@ -35,18 +35,19 @@
     <div *ngFor="let borrow of borrows">
       <div *ngIf="borrow.lenderId == lender.id">
         <div *ngIf="borrow.buddyId != null">
-
           <button ion-item (click)="BorrowDetail(borrow)">
             <ion-row>
               <ion-col col-8>
-                <ion-row *ngFor="let item of borrow.items">
-                  <ion-col col-6>
-                    {{item.name}}
-                  </ion-col>
-                  <ion-col col-6 style="text-align: center">
-                    {{item.borrowAmount}}
-                  </ion-col>
-                </ion-row>
+                <div *ngFor="let item of borrow.items">
+                  <ion-row *ngIf="item.borrowAmount !=0">
+                    <ion-col col-6>
+                      {{item.name}}
+                    </ion-col>
+                    <ion-col col-6 style="text-align: center">
+                      {{item.borrowAmount}}
+                    </ion-col>
+                  </ion-row>
+                </div>
               </ion-col>
               <ion-col col-4 style="text-align: right;align-self: center">
                 {{borrow.date | date : 'dd MMM HH:mm' }}
@@ -80,12 +81,11 @@
   </ion-grid>
 
 
-  <ion-grid *ngIf="budder == true" style="padding-top: 15px" no-padding>
+  <ion-grid *ngIf="budder == true" style="padding-top: 15px;padding-bottom: 30px" no-padding>
 
     <div style="text-align: center;">
       <h5><i>รายการที่เป็นพยาน</i></h5>
       <ion-icon name="contacts"></ion-icon>
-
     </div>
 
     <ion-row style="padding-left: 20px;padding-right: 20px;padding-top: 20px">
@@ -105,26 +105,67 @@
         <button ion-item (click)="BorrowDetail(borrow)">
           <ion-row>
             <ion-col col-8>
-              <ion-row *ngFor="let item of borrow.items">
-                <ion-col col-6>
-                  {{item.name}}
-                </ion-col>
-                <ion-col col-6 style="text-align: center">
-                  {{item.borrowAmount}}
-                </ion-col>
-              </ion-row>
+              <div *ngFor="let item of borrow.items">
+                <ion-row *ngIf="item.borrowAmount !=0">
+                  <ion-col col-6>
+                    {{item.name}}
+                  </ion-col>
+                  <ion-col col-6 style="text-align: center">
+                    {{item.borrowAmount}}
+                  </ion-col>
+                </ion-row>
+              </div>
             </ion-col>
             <ion-col col-4 style="text-align: right;align-self: center">
               {{borrow.lenderName}}
             </ion-col>
           </ion-row>
-
-
         </button>
       </div>
     </div>
 
+  </ion-grid>
 
+  <ion-grid *ngIf="statusReturn == true" style="padding-top: 15px" no-padding>
+
+    <div style="text-align: center;">
+      <h5><i>รายการที่กำลังจะคืน</i></h5>
+      <ion-icon name="md-archive"></ion-icon>
+    </div>
+
+    <ion-row style="padding-left: 20px;padding-right: 20px;padding-top: 20px">
+      <ion-col col-4>
+        <h6>Name</h6>
+      </ion-col>
+      <ion-col col-4 style="text-align: center">
+        <h6>Amount</h6>
+      </ion-col>
+      <ion-col col-4 style="text-align: right">
+        <h6>Locker</h6>
+      </ion-col>
+    </ion-row>
+
+    <div *ngFor="let return of returnList">
+        <button ion-item (click)="ReturnDetail(return)">
+          <ion-row>
+            <ion-col col-8>
+              <div *ngFor="let item of return.items">
+                <ion-row *ngIf="item.returnAmount !=0">
+                  <ion-col col-6>
+                    {{item.name}}
+                  </ion-col>
+                  <ion-col col-6 style="text-align: center">
+                    {{item.returnAmount}}
+                  </ion-col>
+                </ion-row>
+              </div>
+            </ion-col>
+            <ion-col col-4 style="text-align: right;align-self: center">
+              {{return.lockerName}}
+            </ion-col>
+          </ion-row>
+        </button>
+    </div>
 
   </ion-grid>
 
@@ -143,7 +184,7 @@
         </button>
       </ion-col>
       <ion-col col-4>
-        <button style="background-color: unset" (click)="Borrow('d1b8bed9-55c8-4f6b-ab7c-d99cf6206543')">
+        <button style="background-color: unset" (click)="Borrow()">
           <img src="../../assets/imgs/QR3.png" style="width: 55px">
         </button>
       </ion-col>

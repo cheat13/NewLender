@@ -1,4 +1,4 @@
-import { Item, GlobalVarible, Borrow, Locker } from './../../app/models';
+import { Item, GlobalVarible, BorrowList, Locker } from './../../app/models';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
@@ -11,7 +11,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 export class ItemDetailPage {
 
     item: Item = new Item;
-    borrows: Borrow[] = [];
+    borrows: BorrowList[] = [];
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient, public alertCtrl: AlertController) {
     }
@@ -26,7 +26,7 @@ export class ItemDetailPage {
                 this.item = data;
                 console.log(this.item)
             });
-        this.http.get<Borrow[]>(GlobalVarible.host + "/api/Lender/GetAllBorrow")
+        this.http.get<BorrowList[]>(GlobalVarible.host + "/api/Lender/GetAllBorrow")
             .subscribe(data => {
                 this.borrows = data;
                 console.log(this.borrows)

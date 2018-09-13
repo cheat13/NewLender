@@ -19,7 +19,8 @@ namespace WebAPI.Controllers
         IMongoCollection<Locker> Locker { get; set; }
         IMongoCollection<Item> Item { get; set; }
         IMongoCollection<Lender> Lender { get; set; }
-        IMongoCollection<Borrow> Borrow { get; set; }
+        IMongoCollection<BorrowList> BorrowList { get; set; }
+        IMongoCollection<ReturnList> ReturnList { get; set; }
 
         public LenderController()
         {
@@ -33,7 +34,8 @@ namespace WebAPI.Controllers
             Locker = database.GetCollection<Locker>("Lender_Locker");
             Item = database.GetCollection<Item>("Lender_Item");
             Lender = database.GetCollection<Lender>("Lender_Lender");
-            Borrow = database.GetCollection<Borrow>("Lender_Borrow");
+            BorrowList = database.GetCollection<BorrowList>("Lender_BorrowList");
+            ReturnList = database.GetCollection<ReturnList>("Lender_ReturnList");
         }
 
         /// Locker
@@ -100,6 +102,7 @@ namespace WebAPI.Controllers
             item.Id = Guid.NewGuid().ToString();
             item.Amount = item.TotalAmount;
             item.BorrowAmount = 0;
+            item.ReturnAmount = 0;
             Item.InsertOne(item);
         }
 
@@ -132,85 +135,60 @@ namespace WebAPI.Controllers
             Lender.InsertOne(lender);
         }
 
-        /// Borrow
+        /// BorrowList
         
         [HttpGet("[action]")]
-        public IEnumerable<Borrow> GetAllBorrow()
+        public IEnumerable<BorrowList> GetAllBorrow()
         {
-            var borrows = Borrow.Find(x => true).ToList();
+            var borrows = BorrowList.Find(x => true).ToList();
             return borrows;
         }
         
         [HttpGet("[action]/{lockerId}")]
-        public IEnumerable<Borrow> ListBorrow(string lockerId)
+        public IEnumerable<BorrowList> ListBorrow(string lockerId)
         {
-            var borrows = Borrow.Find(x => x.LockerId == lockerId).ToList();
+            var borrows = BorrowList.Find(x => x.LockerId == lockerId).ToList();
             return borrows;
         }
 
         [HttpGet("[action]/{lenderId}")]
-        public IEnumerable<Borrow> GetBorrowLender(string lenderId)
+        public IEnumerable<BorrowList> GetBorrowLender(string lenderId)
         {
-            var borrows = Borrow.Find(x => (x.LenderId == lenderId || x.BuddyId == lenderId)).ToList();
+            var borrows = BorrowList.Find(x => (x.LenderId == lenderId || x.BuddyId == lenderId)).ToList();
             return borrows;
         }
 
         [HttpGet("[action]/{id}")]
-        public Borrow GetBorrow(string id)
+        public BorrowList GetBorrow(string id)
         {
-            var borrow = Borrow.Find(x => x.Id == id).FirstOrDefault();
+            var borrow = BorrowList.Find(x => x.Id == id).FirstOrDefault();
             return borrow;
         }
-
-        //[HttpPost("[action]")]
-        //public void CreateBorrow([FromBody]Borrow borrowDetail)
-        //{
-        //    var borrowItems = borrowDetail.Items.Where(x => x.BorrowAmount != 0).ToArray();
-
-        //    Borrow borrow = borrowDetail;
-        //    borrow.Id = Guid.NewGuid().ToString();
-        //    borrow.Items = borrowItems.ToList();
-        //    borrow.Date = DateTime.UtcNow;
-
-        //    Borrow.InsertOne(borrow);
-
-        //    var items = ListItems(borrow.LockerId).ToArray();
-
-        //    for (int i = 0; i < items.Length; i++)
-        //    {
-        //        for (int j = 0; j < borrowItems.Length; j++)
-        //        {
-        //            if (items[i].Id == borrowItems[j].Id)
-        //            {
-        //                items[i].Amount -= borrowItems[j].BorrowAmount;
-        //            }
-        //        }
-        //    }
-
-        //    foreach (var item in items)
-        //    {
-        //        EditItem(item);
-        //    }
-
-        //}
-
+        
         [HttpPost("[action]")]
-        public Borrow CreateBorrow([FromBody]Borrow borrowDetail)
+        public BorrowList CreateBorrow([FromBody]BorrowList borrowDetail)
         {
             var borrowItems = borrowDetail.Items.Where(x => x.BorrowAmount != 0).ToArray();
 
-            Borrow borrow = borrowDetail;
+            BorrowList borrow = borrowDetail;
             borrow.Id = Guid.NewGuid().ToString();
             borrow.Items = borrowItems.ToList();
             borrow.Date = DateTime.UtcNow;
             
-            Borrow.InsertOne(borrow);
+            BorrowList.InsertOne(borrow);
 
             return borrow;
         }
 
         [HttpPost("[action]")]
-        public void ConfirmBorrow([FromBody]Borrow borrow)
+        public void EditBorrowList([FromBody]BorrowList borrowList)
+        {
+
+            BorrowList.ReplaceOne(x => x.Id == borrowList.Id, borrowList);
+        }
+
+        [HttpPost("[action]")]
+        public void ConfirmBorrow([FromBody]BorrowList borrow)
         {
             var borrowItems = borrow.Items.ToArray();
             borrow.Date = DateTime.UtcNow;
@@ -233,39 +211,119 @@ namespace WebAPI.Controllers
                 EditItem(item);
             }
             
-            Borrow.ReplaceOne(x => x.Id == borrow.Id, borrow);
+            BorrowList.ReplaceOne(x => x.Id == borrow.Id, borrow);
         }
 
         [HttpPost("[action]")]
-        public void CancelBorrow([FromBody]Borrow borrow)
+        public void CancelBorrow([FromBody]BorrowList borrow)
         {
-            Borrow.DeleteOne(x => x.Id == borrow.Id);
+            BorrowList.DeleteOne(x => x.Id == borrow.Id);
         }
 
-        //[HttpGet("[action]/{lenderID}")]
-        //public IEnumerable<Item> ListItemsLender(string lenderID)
-        //{
+        /// ReturnList
+        
+        [HttpGet("[action]")]
+        public IEnumerable<ReturnList> GetAllReturn()
+        {
+            var returnList = ReturnList.Find(x => true).ToList();
+            return returnList;
+        }
 
-        //    var borrows = GetBorrowLender(lenderID).ToArray();
-        //    List<Item> itemsBorrow = null;
-        //    foreach (var borrow in borrows)
-        //    {
-        //        itemsBorrow = borrow.Items.Where(x => x.Borrow != 0).ToList();
-        //    }
+        [HttpGet("[action]/{lockerId}")]
+        public IEnumerable<ReturnList> ListReturn(string lockerId)
+        {
+            var returnList = ReturnList.Find(x => x.LockerId == lockerId).ToList();
+            return returnList;
+        }
 
-        //    return itemsBorrow;
-        //}
+        [HttpGet("[action]/{lenderId}")]
+        public IEnumerable<ReturnList> GetReturnListReturner(string lenderId)
+        {
+            var returnList = ReturnList.Find(x => (x.ReturnerId == lenderId || x.BuddyId == lenderId)).ToList();
+            return returnList;
+        }
+
+        [HttpGet("[action]/{id}")]
+        public ReturnList GetReturnList(string id)
+        {
+            var returnList = ReturnList.Find(x => x.Id == id).FirstOrDefault();
+            return returnList;
+        }
+
+        [HttpPost("[action]")]
+        public ReturnList CreateReturn([FromBody]ReturnList returnDetail)
+        {
+            var returnItems = returnDetail.Items.Where(x => x.ReturnAmount != 0).ToArray();
+
+            ReturnList returnList = returnDetail;
+            returnList.Id = Guid.NewGuid().ToString();
+            returnList.Items = returnItems.ToList();
+            returnList.Date = DateTime.UtcNow;
+
+            ReturnList.InsertOne(returnList);
+
+            return returnList;
+        }
+
+        [HttpPost("[action]")]
+        public void ConfirmReturn([FromBody]ReturnList returnList)
+        {
+            var returnItems = returnList.Items.ToArray();
+            returnList.Date = DateTime.UtcNow;
 
 
+            var items = ListItems(returnList.LockerId).ToArray();
 
-        //[HttpGet("[action]/{lenderID}")]
-        //public IEnumerable<Item> ListItemsLender(string lenderID)
-        //{
-        //    var items = GetAllItem();
-        //    var seletedItems = items.Where(x =>  x.Lenders?.Any(it => it.Id == lenderID && it.Borrow != 0) ?? false);
 
-        //    return seletedItems;
-        //}
+            for (int i = 0; i < items.Length; i++)
+            {
+                for (int j = 0; j < returnItems.Length; j++)
+                {
+                    if (items[i].Id == returnItems[j].Id)
+                    {
+                        items[i].Amount += returnItems[j].ReturnAmount;
+                    }
+                }
+            }
+
+            foreach (var item in items)
+            {
+                EditItem(item);
+            }
+
+            BorrowList borrowList = GetBorrow(returnList.BorrowListId);
+
+            for (int i = 0; i < borrowList.Items.ToArray().Length; i++)
+            {
+                for (int j = 0; j < returnItems.Length; j++)
+                {
+                    if (borrowList.Items[i].Id == returnItems[j].Id)
+                    {
+                        borrowList.Items[i].BorrowAmount -= returnItems[j].ReturnAmount;
+                    }
+                }
+            }
+
+            var borrowItems = borrowList.Items.Where(x => x.BorrowAmount != 0).ToArray();
+
+            if (borrowItems.Length == 0)
+            {
+                CancelBorrow(borrowList);
+            }
+            else
+            {
+                EditBorrowList(borrowList);
+            }
+            
+            CancelReturn(returnList);
+        }
+
+        [HttpPost("[action]")]
+        public void CancelReturn([FromBody]ReturnList returnList)
+        {
+            ReturnList.DeleteOne(x => x.Id == returnList.Id);
+        }
+
 
 
     }

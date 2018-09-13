@@ -22,6 +22,8 @@ import { KeyListPage } from '../pages/key-list/key-list';
 import { ConfirmBorrowPage } from '../pages/confirm-borrow/confirm-borrow';
 import { RequestBorrowPage } from '../pages/request-borrow/request-borrow';
 import { BorrowDetailPage } from '../pages/borrow-detail/borrow-detail';
+import { RequestReturnPage } from '../pages/request-return/request-return';
+import { ConfirmReturnPage } from '../pages/confirm-return/confirm-return';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { BorrowDetailPage } from '../pages/borrow-detail/borrow-detail';
     KeyListPage,
     ConfirmBorrowPage,
     RequestBorrowPage,
-    BorrowDetailPage
+    BorrowDetailPage,
+    RequestReturnPage,
+    ConfirmReturnPage
   ],
   imports: [
     BrowserModule,
@@ -62,7 +66,9 @@ import { BorrowDetailPage } from '../pages/borrow-detail/borrow-detail';
     KeyListPage,
     ConfirmBorrowPage,
     RequestBorrowPage,
-    BorrowDetailPage
+    BorrowDetailPage,
+    RequestReturnPage,
+    ConfirmReturnPage
   ],
   providers: [
     StatusBar,

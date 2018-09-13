@@ -7,6 +7,7 @@ export class Item {
     amount: number
     totalAmount: number
     borrowAmount: number
+    returnAmount: number
 }
 
 export class Lender {
@@ -20,13 +21,27 @@ export class Locker {
     cate: string
 }
 
-export class Borrow {
+export class BorrowList {
     id: string
     lockerId: string
     lockerName: string
     lockerCate: string
     lenderId: string
     lenderName: string
+    buddyId: string
+    buddyName: string
+    date: string
+    items: Item[]
+}
+
+export class ReturnList {
+    id: string
+    borrowListId:string;
+    lockerId: string
+    lockerName: string
+    lockerCate: string
+    returnerId: string
+    returnerName: string
     buddyId: string
     buddyName: string
     date: string

@@ -6,11 +6,10 @@
         <ion-icon name="ios-arrow-round-back" style="zoom: 1.5;"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>RequestBorrow</ion-title>
+    <ion-title>RequestReturn</ion-title>
   </ion-toolbar>
 
 </ion-header>
-
 
 <ion-content no-padding>
 
@@ -23,12 +22,12 @@
     </ion-row>
 
     <ion-row style="align-self: center;width: 220px;height: 220px;">
-      <img src="https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl={{borrow.id}}">
+      <img src="https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl={{returnList.id}}">
     </ion-row>
 
     <ion-row style="text-align: center">
       <ion-col col-12>
-        <i>{{borrow.date | date : 'dd MMM HH:mm' }}</i>
+        <i>{{returnList.date | date : 'dd MMM HH:mm' }}</i>
       </ion-col>
     </ion-row>
 
@@ -38,10 +37,10 @@
 
     <ion-row style="text-align: center">
       <ion-col col-12>
-        <h5>รายการยืมของ</h5>
+        <h5>รายการคืนของ</h5>
       </ion-col>
       <ion-col col-12>
-        <h6>Locker {{borrow.lockerName}}</h6>
+        <h6>Locker {{returnList.lockerName}}</h6>
       </ion-col>
     </ion-row>
 
@@ -54,13 +53,13 @@
       </ion-col>
     </ion-row>
 
-    <ion-item *ngFor="let item of borrow.items">
+    <ion-item *ngFor="let item of returnList.items">
       <ion-row style="padding-left: 20px">
         <ion-col col-9>
           <h6>{{item.name}}</h6>
         </ion-col>
         <ion-col col-3 style="text-align: center;">
-          <h6>{{item.borrowAmount}}</h6>
+          <h6>{{item.returnAmount}}</h6>
         </ion-col>
       </ion-row>
     </ion-item>
@@ -73,7 +72,7 @@
   <ion-grid no-padding style="  text-align: center">
     <ion-row>
       <ion-col col-12 style="background-color:#f53d3d">
-        <button style="background-color: unset;color: white" (click)="CancelBorrow()">
+        <button style="background-color: unset;color: white" (click)="CancelReturn()">
           <h5>Cancel</h5>
         </button>
       </ion-col>

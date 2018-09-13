@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Models
 {
-    public class Borrow
+    public class BorrowList
     {
         public string Id { get; set; }
         public string LockerId { get; set; }

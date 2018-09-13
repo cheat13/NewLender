@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Borrow, GlobalVarible } from '../../app/models';
+import { BorrowList, GlobalVarible } from '../../app/models';
 import { ConfirmBorrowPage } from '../confirm-borrow/confirm-borrow';
+import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -11,7 +12,7 @@ import { ConfirmBorrowPage } from '../confirm-borrow/confirm-borrow';
 })
 export class RequestBorrowPage {
 
-  borrow: Borrow = new Borrow;
+  borrow: BorrowList = new BorrowList;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient) {
   }
@@ -34,6 +35,10 @@ export class RequestBorrowPage {
 
   goCfBr(){
     this.navCtrl.push(ConfirmBorrowPage,{_borrow : this.borrow});
+  }
+
+  goHome(){
+    this.navCtrl.push(HomePage);
   }
 
 }

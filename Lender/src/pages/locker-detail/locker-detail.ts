@@ -1,7 +1,7 @@
 import { ItemEditPage } from './../item-edit/item-edit';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ToastController, ActionSheetController } from 'ionic-angular';
-import { Locker, GlobalVarible, Item, Item } from '../../app/models';
+import { Locker, GlobalVarible, Item } from '../../app/models';
 import { HttpClient } from '@angular/common/http';
 import { ItemAddPage } from '../item-add/item-add';
 import { ItemDetailPage } from '../item-detail/item-detail';

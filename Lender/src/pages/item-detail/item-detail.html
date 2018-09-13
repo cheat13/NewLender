@@ -12,7 +12,7 @@
   <ion-grid padding style="background-color: lightgrey">
 
     <div style="text-align: center" padding>
-      <ion-icon name="color-wand" style="zoom:6; "></ion-icon>
+      <img src="../../assets/imgs/img.jpg">
     </div>
 
     <ion-grid style="padding-left: 40px">
@@ -64,7 +64,7 @@
     <div *ngFor="let borrow of borrows">
       <div *ngIf="borrow.lockerId == item.locker && borrow.buddyId != null">
         <div *ngFor="let _item of borrow.items">
-          <div *ngIf="_item.id == item.id">
+          <div *ngIf="_item.id == item.id && _item.borrowAmount != 0">
             <ion-item>
               <ion-row style="padding-left: 20px">
                 <ion-col col-4>
