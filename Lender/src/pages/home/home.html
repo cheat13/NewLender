@@ -16,7 +16,7 @@
   <ion-grid *ngIf="status == true" style="padding-top: 15px;padding-bottom: 30px" no-padding>
 
     <div style="text-align: center">
-      <h5><i>รายการที่ยืม</i></h5>
+      <h6>รายการที่ยืม</h6>
       <ion-icon name="ios-basket-outline"></ion-icon>
     </div>
 
@@ -84,7 +84,7 @@
   <ion-grid *ngIf="budder == true" style="padding-top: 15px;padding-bottom: 30px" no-padding>
 
     <div style="text-align: center;">
-      <h5><i>รายการที่เป็นพยาน</i></h5>
+      <h6>รายการที่เป็นพยาน</h6>
       <ion-icon name="contacts"></ion-icon>
     </div>
 
@@ -129,7 +129,7 @@
   <ion-grid *ngIf="statusReturn == true" style="padding-top: 15px" no-padding>
 
     <div style="text-align: center;">
-      <h5><i>รายการที่กำลังจะคืน</i></h5>
+      <h6>รายการที่กำลังจะคืน</h6>
       <ion-icon name="md-archive"></ion-icon>
     </div>
 
@@ -179,8 +179,9 @@
   <ion-grid style="background-color: #f53d3d ;height: 65px; text-align: center; padding-top: 2px; ">
     <ion-row>
       <ion-col col-4>
-        <button style="background-color: unset;color: white" (click)="KeyList()">
-          <h5>Key</h5>
+        <button style="background-color: unset;color: white;padding-top: 5px" (click)="KeyList()">
+          <ion-icon name="key" style="zoom: 1.5"></ion-icon><br>
+          Keylist
         </button>
       </ion-col>
       <ion-col col-4>
@@ -189,10 +190,10 @@
         </button>
       </ion-col>
       <ion-col col-4>
-        <button style="background-color: unset;color: white">
-          <h5>Return</h5>
+        <button style="background-color: unset;color: white;padding-top: 8px" (click)="Search()">
+          <ion-icon name="search" style="zoom: 1.5"></ion-icon><br>
+          Search
         </button>
-
       </ion-col>
     </ion-row>
   </ion-grid>

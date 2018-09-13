@@ -10,6 +10,7 @@ namespace WebAPI.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public string Locker { get; set; }
+        public string LockerName { get; set; }
         public int Amount { get; set; }
         public int TotalAmount { get; set; }
         public int BorrowAmount { get; set; }

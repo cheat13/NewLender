@@ -4,6 +4,7 @@ export class Item {
     id: string
     name: string
     locker: string
+    lockerName: string
     amount: number
     totalAmount: number
     borrowAmount: number

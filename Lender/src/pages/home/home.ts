@@ -10,6 +10,7 @@ import { RequestBorrowPage } from '../request-borrow/request-borrow';
 import { BorrowDetailPage } from '../borrow-detail/borrow-detail';
 import { ConfirmReturnPage } from '../confirm-return/confirm-return';
 import { RequestReturnPage } from '../request-return/request-return';
+import { SearchItemsPage } from '../search-items/search-items';
 
 @Component({
   selector: 'page-home',
@@ -32,6 +33,7 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
+    this.status = null;
     this.lender = GlobalVarible.lender;
     this.http.get<BorrowList[]>(GlobalVarible.host + "/api/Lender/GetBorrowLender/" + GlobalVarible.lender.id)
       .subscribe(data => {
@@ -133,5 +135,9 @@ export class HomePage {
     }).catch(err => {
       console.log('Error', err);
     });
+  }
+
+  Search(){
+    this.navCtrl.push(SearchItemsPage);
   }
 }

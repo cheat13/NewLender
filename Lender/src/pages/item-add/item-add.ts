@@ -30,6 +30,7 @@ export class ItemAddPage {
   ionViewDidEnter() {
     this.locker = this.navParams.data._locker;
     this.item.locker = this.locker.id;
+    this.item.lockerName = this.locker.name
   }
 
 }

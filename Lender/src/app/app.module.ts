@@ -24,6 +24,7 @@ import { RequestBorrowPage } from '../pages/request-borrow/request-borrow';
 import { BorrowDetailPage } from '../pages/borrow-detail/borrow-detail';
 import { RequestReturnPage } from '../pages/request-return/request-return';
 import { ConfirmReturnPage } from '../pages/confirm-return/confirm-return';
+import { SearchItemsPage } from '../pages/search-items/search-items';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ConfirmReturnPage } from '../pages/confirm-return/confirm-return';
     RequestBorrowPage,
     BorrowDetailPage,
     RequestReturnPage,
-    ConfirmReturnPage
+    ConfirmReturnPage,
+    SearchItemsPage
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,8 @@ import { ConfirmReturnPage } from '../pages/confirm-return/confirm-return';
     RequestBorrowPage,
     BorrowDetailPage,
     RequestReturnPage,
-    ConfirmReturnPage
+    ConfirmReturnPage,
+    SearchItemsPage
   ],
   providers: [
     StatusBar,

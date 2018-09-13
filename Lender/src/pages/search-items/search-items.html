@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-navbar color="danger">
+    <ion-title>Search Items</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+
+  <ion-row style="padding-left: 10px;padding-top: 10px">
+    <ion-col col-5>
+      <h6>Name</h6>
+    </ion-col>
+    <ion-col col-4 style="text-align: center">
+      <h6>Amount</h6>
+    </ion-col>
+    <ion-col col-3 style="text-align: right">
+      <h6>Locker</h6>
+    </ion-col>
+  </ion-row>
+
+  <div *ngFor="let item of items">
+    <ion-item>
+      <ion-row style="padding-left: 10px">
+        <ion-col col-5>
+          {{item.name}}
+        </ion-col>
+        <ion-col col-4 style="text-align: center">
+          {{item.amount}}/{{item.totalAmount}}
+        </ion-col>
+        <ion-col col-3 style="text-align: right">
+          {{item.lockerName}}
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </div>
+
+</ion-content>
