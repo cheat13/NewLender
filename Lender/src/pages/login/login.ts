@@ -13,6 +13,7 @@ export class LoginPage {
 
   lender: Lender = new Lender;
   name: any;
+  login: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
 
@@ -23,6 +24,7 @@ export class LoginPage {
   }
 
   Login() {
+    this.login = true;
     if (this.name != null) {
       this.http.get<Lender>(GlobalVarible.host + "/api/Lender/GetUser/" + this.name)
         .subscribe(data => {
@@ -45,6 +47,7 @@ export class LoginPage {
         });
     }
     else {
+      this.login = false;
       const toast = this.toastCtrl.create({
         message: 'Please input username.',
         duration: 3000

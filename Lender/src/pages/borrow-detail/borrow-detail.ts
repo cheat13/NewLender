@@ -66,7 +66,7 @@ export class BorrowDetailPage {
           }
           else {
             const toast = this.toastCtrl.create({
-              message: 'Worng locker. Please scan locker ' + this.returnList.lockerName,
+              message: 'Worng locker. Please scan basket ' + this.returnList.lockerName,
               duration: 3000
             });
             toast.present();

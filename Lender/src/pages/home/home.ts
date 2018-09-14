@@ -126,7 +126,7 @@ export class HomePage {
       }
       else{
         const toast = this.toastCtrl.create({
-          message: 'Worng locker. Please scan locker '+ returnList.lockerName,
+          message: 'Worng locker. Please scan basket '+ returnList.lockerName,
           duration: 3000
         });
         toast.present();

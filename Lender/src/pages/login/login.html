@@ -17,7 +17,8 @@
       </ion-item>
     </ion-row>
     <div padding>
-      <button ion-button block round (click)="Login()">Next</button>
+      <button ion-button block round (click)="Login()" *ngIf="login == false">Next</button>
+      <button ion-button block round color="secondary" *ngIf="login == true">Next</button>
     </div>
   </ion-grid>
 

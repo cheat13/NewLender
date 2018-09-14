@@ -19,6 +19,8 @@ export class LockerAddPage {
 
   locker: Locker = new Locker;
   _locker: Locker = new Locker;
+  add: boolean = false;
+  lockers: Locker[];
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public http: HttpClient) {
   }
@@ -27,12 +29,24 @@ export class LockerAddPage {
     console.log('ionViewDidLoad LockerAddPage');
   }
 
+  ionViewDidEnter() {
+    this.locker.layer = this.navParams.data._layer;
+    this.http.get<Locker[]>(GlobalVarible.host + "/api/Lender/ListLayerLockers/" + this.locker.layer)
+      .subscribe(data => {
+        this.lockers = data;
+        this.locker.name = this.navParams.data._layer + (this.lockers.length + 1).toString();
+      });
+
+  }
+
   CreateLocker() {
+    this.add = true;
     this.http.get<Locker>(GlobalVarible.host + "/api/Lender/GetLockerByName/" + this.locker.name)
       .subscribe(data => {
         this._locker = data;
         if (this._locker == null) {
           if (this.locker.name == null || this.locker.name == '' || this.locker.cate == null || this.locker.cate == '') {
+            this.add = false;
             const toast = this.toastCtrl.create({
               message: 'Please fill in information.',
               duration: 3000
@@ -47,6 +61,7 @@ export class LockerAddPage {
           }
         }
         else {
+          this.add = false;
           const toast = this.toastCtrl.create({
             message: 'This name is already.',
             duration: 3000
@@ -54,10 +69,6 @@ export class LockerAddPage {
           toast.present();
         }
       });
-
-      
-
-
   }
 
 }

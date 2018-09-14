@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="dark">
-    <ion-title>Edit Locker {{locker.name}}</ion-title>
+    <ion-title>Edit Basket {{locker.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -10,7 +10,7 @@
 <ion-content padding>
 
   <div style="text-align: center" padding>
-    <img src="../../assets/imgs/locker1.png">
+    <img src="../../assets/imgs/b1.png" style="width: 50%">
   </div>
 
   <ion-item>
@@ -23,7 +23,8 @@
   <br>
 
   <div padding>
-    <button ion-button block (click)="EditLocker()">Edit</button>
+    <button ion-button block round (click)="EditLocker()" *ngIf="edit == false">Edit</button>
+    <button ion-button block round color="danger" *ngIf="edit == true">Edit</button>
   </div>
 
 

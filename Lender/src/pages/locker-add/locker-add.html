@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="dark">
-    <ion-title>Create Locker</ion-title>
+    <ion-title>Create Basket</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -10,7 +10,7 @@
 <ion-content padding>
 
   <div style="text-align: center" padding>
-    <img src="../../assets/imgs/locker1.png">
+    <img src="../../assets/imgs/b1.png" style="width: 50%">
   </div>
 
   <ion-item>
@@ -23,7 +23,8 @@
   <br>
 
   <div padding>
-    <button ion-button block (click)="CreateLocker()">Create</button>
+    <button ion-button block round (click)="CreateLocker()" *ngIf="add == false">Create</button>
+    <button ion-button block round color="danger" *ngIf="add == true">Create</button>
   </div>
   
 

@@ -47,6 +47,13 @@ namespace WebAPI.Controllers
             return lockers;
         }
 
+        [HttpGet("[action]/{layer}")]
+        public IEnumerable<Locker> ListLayerLockers(string layer)
+        {
+            var lockers = Locker.Find(x => x.Layer == layer).ToList();
+            return lockers;
+        }
+
         [HttpGet("[action]/{id}")]
         public Locker GetLocker(string id)
         {

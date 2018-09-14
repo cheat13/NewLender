@@ -14,6 +14,7 @@ export class ItemAddPage {
   locker: Locker = new Locker;
   item: Item = new Item;
   _item: Item = new Item;
+  add: boolean = false;
 
   constructor(public navCtrl: NavController, private camera: Camera, public toastCtrl: ToastController, public navParams: NavParams, public http: HttpClient) {
   }
@@ -24,11 +25,13 @@ export class ItemAddPage {
   }
 
   AddItem() {
+    this.add = true;
     this.http.get<Item>(GlobalVarible.host + "/api/Lender/GetItemByName/" + this.item.name)
       .subscribe(data => {
         this._item = data;
         if (this._item == null) {
           if (this.item.name == null || this.item.name == '' || this.item.totalAmount == null || this.item.totalAmount == 0) {
+            this.add = false;
             const toast = this.toastCtrl.create({
               message: 'Please fill in information.',
               duration: 3000
@@ -43,6 +46,7 @@ export class ItemAddPage {
           }
         }
         else {
+          this.add = false;
           const toast = this.toastCtrl.create({
             message: 'This name is already.',
             duration: 3000

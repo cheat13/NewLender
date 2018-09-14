@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Locker</ion-title>
+    <ion-title>Shelves</ion-title>
     <!-- <ion-buttons end>
       <button ion-button icon-only (click)="AddLocker()">
         <ion-icon name="add-circle"></ion-icon>
@@ -16,26 +16,73 @@
 <ion-content padding>
 
 
-  <ion-grid>
+  <ion-grid class="shelves" no-padding>
 
-    <ion-row>
+    <ion-row class="classShelves">
 
-      <ion-col col-6 padding *ngFor="let L of locker">
+      <ion-col col-3 padding *ngFor="let L of lockerA">
         <button class="buttonLocker" (click)="lockerDetail(L)" (press)="press(L)">
-          <h1>{{L.name}}</h1><br>
-          <h6>หมวด : {{L.cate}}</h6>
+          {{L.name}}
+        </button>
+      </ion-col>
+      <ion-col col-3 padding style="text-align: center">
+        <button style="width: 80%; height: 45px; " ion-button outline color="dark" (click)="AddLocker('A')">
+          <ion-icon name="add-circle" style="zoom: 1;"></ion-icon>
         </button>
       </ion-col>
 
-      <ion-col col-6 padding style="text-align: center;align-self: center">
-        <button style="width: 110px; height: 130px; " ion-button outline color="dark" (click)="AddLocker()">
-          <ion-icon name="add-circle" style="zoom: 2;"></ion-icon>
+    </ion-row>
+
+    <ion-row class="classShelves">
+
+      <ion-col col-3 padding *ngFor="let L of lockerB">
+        <button class="buttonLocker" (click)="lockerDetail(L)" (press)="press(L)">
+          {{L.name}}
+        </button>
+      </ion-col>
+      <ion-col col-3 padding style="text-align: center">
+        <button style="width: 80%; height: 45px; " ion-button outline color="dark" (click)="AddLocker('B')">
+          <ion-icon name="add-circle" style="zoom: 1;"></ion-icon>
+        </button>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row class="classShelves">
+
+      <ion-col col-3 padding *ngFor="let L of lockerC">
+        <button class="buttonLocker" (click)="lockerDetail(L)" (press)="press(L)">
+          {{L.name}}
+        </button>
+      </ion-col>
+      <ion-col col-3 padding style="text-align: center">
+        <button style="width: 80%; height: 45px; " ion-button outline color="dark" (click)="AddLocker('C')">
+          <ion-icon name="add-circle" style="zoom: 1;"></ion-icon>
+        </button>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row class="classShelves">
+
+      <ion-col col-3 padding *ngFor="let L of lockerD">
+        <button class="buttonLocker" (click)="lockerDetail(L)" (press)="press(L)">
+          {{L.name}}
+        </button>
+      </ion-col>
+      <ion-col col-3 padding style="text-align: center">
+        <button style="width: 80%; height: 45px; " ion-button outline color="dark" (click)="AddLocker('D')">
+          <ion-icon name="add-circle" style="zoom: 1;"></ion-icon>
         </button>
       </ion-col>
 
     </ion-row>
 
 
+
+
   </ion-grid>
+
+
 
 </ion-content>

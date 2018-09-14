@@ -15,6 +15,11 @@ export class LockerPage {
 
   locker: Locker[];
   items: Item[];
+  n: number = 3;
+  lockerA: Locker[];
+  lockerB: Locker[];
+  lockerC: Locker[];
+  lockerD: Locker[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public toastCtrl: ToastController) {
   }
@@ -24,15 +29,42 @@ export class LockerPage {
   }
 
   ionViewDidEnter() {
-    this.http.get<Locker[]>(GlobalVarible.host + "/api/Lender/ListLockers")
-      .subscribe(data => {
-        this.locker = data;
-      });
-
+    this.getLockerA();
+    this.getLockerB();
+    this.getLockerC();
+    this.getLockerD();
   }
 
-  AddLocker() {
-    this.navCtrl.push(LockerAddPage);
+  getLockerA() {
+    this.http.get<Locker[]>(GlobalVarible.host + "/api/Lender/ListLayerLockers/" + 'A')
+    .subscribe(data => {
+      this.lockerA = data;
+    });
+  }
+
+  getLockerB() {
+    this.http.get<Locker[]>(GlobalVarible.host + "/api/Lender/ListLayerLockers/" + 'B')
+    .subscribe(data => {
+      this.lockerB = data;
+    });
+  }
+
+  getLockerC() {
+    this.http.get<Locker[]>(GlobalVarible.host + "/api/Lender/ListLayerLockers/" + 'C')
+    .subscribe(data => {
+      this.lockerC = data;
+    });
+  }
+
+  getLockerD() {
+    this.http.get<Locker[]>(GlobalVarible.host + "/api/Lender/ListLayerLockers/" + 'D')
+    .subscribe(data => {
+      this.lockerD = data;
+    });
+  }
+
+  AddLocker(layer: string) {
+    this.navCtrl.push(LockerAddPage, { _layer: layer });
   }
 
   lockerDetail(locker: Locker) {

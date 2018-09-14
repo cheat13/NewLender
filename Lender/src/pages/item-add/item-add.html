@@ -1,7 +1,7 @@
 <ion-header>
 
-  <ion-navbar color="lender">
-    <ion-title>Locker {{locker.name}} : Add Item</ion-title>
+  <ion-navbar color="danger">
+    <ion-title>Basket {{locker.name}} : Add Item</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -24,7 +24,8 @@
   <br>
 
   <div padding>
-    <button ion-button block (click)="AddItem()">Add</button>
+    <button ion-button block round (click)="AddItem()" *ngIf="add == false">Add</button>
+    <button ion-button block round color="danger" *ngIf="add == true">Add</button>
   </div>
 
 

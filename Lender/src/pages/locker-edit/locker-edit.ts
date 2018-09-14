@@ -12,6 +12,7 @@ export class LockerEditPage {
 
   locker: Locker = new Locker;
   _locker: Locker = new Locker;
+  edit:boolean = false;
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, public http: HttpClient) {
     this.locker = this.navParams.data._locker;
@@ -22,11 +23,13 @@ export class LockerEditPage {
   }
 
   EditLocker() {
+    this.edit = true;
     this.http.get<Locker>(GlobalVarible.host + "/api/Lender/GetLockerByName/" + this.locker.name)
       .subscribe(data => {
         this._locker = data;
         if (this._locker == null) {
           if (this.locker.name == '' || this.locker.cate == '') {
+            this.edit = false;
             const toast = this.toastCtrl.create({
               message: 'Please fill in information.',
               duration: 3000
@@ -41,6 +44,7 @@ export class LockerEditPage {
           }
         }
         else {
+          this.edit = false;
           const toast = this.toastCtrl.create({
             message: 'This name is already.',
             duration: 3000

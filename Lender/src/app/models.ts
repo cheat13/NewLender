@@ -20,6 +20,7 @@ export class Lender {
 export class Locker {
     id: string
     name: string
+    layer: string
     cate: string
 }
 

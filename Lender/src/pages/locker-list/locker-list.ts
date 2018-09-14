@@ -14,6 +14,7 @@ export class LockerListPage {
   items: Item[] = [];
   locker: Locker = new Locker;
   borrow: BorrowList = new BorrowList;
+  status: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient, public toastCtrl: ToastController) {
 
@@ -53,8 +54,10 @@ export class LockerListPage {
   // }
 
   Borrow() {
+    this.status = true;
     this.borrow.items = this.items;
     if (this.borrow.items.find(x => x.borrowAmount != 0) == null) {
+      this.status = false;
       const toast = this.toastCtrl.create({
         message: 'Please input borrow amount.',
         duration: 3000
@@ -71,6 +74,7 @@ export class LockerListPage {
           });
       }
       else {
+        this.status = false;
         const toast = this.toastCtrl.create({
           message: 'Please check input borrow amount.',
           duration: 3000

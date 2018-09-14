@@ -13,6 +13,7 @@ export class ItemEditPage {
 
   item: Item = new Item;
   _item: Item = new Item;
+  add: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public http: HttpClient, private camera: Camera) {
   }
@@ -30,11 +31,13 @@ export class ItemEditPage {
   }
 
   EditItem() {
+    this.add = true;
     this.http.get<Item>(GlobalVarible.host + "/api/Lender/GetItemByName/" + this.item.name)
       .subscribe(data => {
         this._item = data;
         if (this._item == null || this._item.name == this.item.name) {
           if (this.item.name == '' || this.item.amount == 0) {
+            this.add = false;
             const toast = this.toastCtrl.create({
               message: 'Please fill in information.',
               duration: 3000
@@ -49,6 +52,7 @@ export class ItemEditPage {
           }
         }
         else {
+          this.add = false;
           const toast = this.toastCtrl.create({
             message: 'This name is already.',
             duration: 3000
