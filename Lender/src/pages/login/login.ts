@@ -1,7 +1,7 @@
 import { HomePage } from './../home/home';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { Lender, GlobalVarible } from '../../app/models';
 
 @IonicPage()
@@ -13,8 +13,9 @@ export class LoginPage {
 
   lender: Lender = new Lender;
   name: any;
+  wait: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient, public toastCtrl: ToastController,public loadingCtrl: LoadingController) {
 
   }
 
@@ -27,7 +28,6 @@ export class LoginPage {
       this.http.get<Lender>(GlobalVarible.host + "/api/Lender/GetUser/" + this.name)
         .subscribe(data => {
           this.lender = data;
-
           if (this.lender == null) {
             this.lender = new Lender;
             this.lender.name = this.name;
@@ -40,12 +40,14 @@ export class LoginPage {
                     this.lender = data;
                     GlobalVarible.lender = this.lender;
                     this.navCtrl.push(HomePage);
+                    this.wait = true;
                   });
               });
           }
           else {
             GlobalVarible.lender = this.lender;
             this.navCtrl.push(HomePage);
+            this.wait = true;
           }
         });
     }
@@ -57,6 +59,5 @@ export class LoginPage {
       toast.present();
     }
   }
-
 
 }

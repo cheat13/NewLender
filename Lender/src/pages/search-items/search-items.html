@@ -23,20 +23,18 @@
     </ion-col>
   </ion-row>
 
-  <div *ngFor="let item of items">
-    <ion-item>
-      <ion-row style="padding-left: 10px">
-        <ion-col col-5>
-          {{item.name}}
-        </ion-col>
-        <ion-col col-4 style="text-align: center">
-          {{item.amount}}/{{item.totalAmount}}
-        </ion-col>
-        <ion-col col-3 style="text-align: right">
-          {{item.lockerName}}
-        </ion-col>
-      </ion-row>
-    </ion-item>
-  </div>
+  <button ion-item *ngFor="let item of items" (click)="ItemDetail(item.id)">
+    <ion-row style="padding-left: 10px">
+      <ion-col col-5>
+        {{item.name}}
+      </ion-col>
+      <ion-col col-4 style="text-align: center">
+        {{item.amount}}/{{item.totalAmount}}
+      </ion-col>
+      <ion-col col-3 style="text-align: right">
+        {{item.lockerName}}
+      </ion-col>
+    </ion-row>
+  </button>
 
 </ion-content>

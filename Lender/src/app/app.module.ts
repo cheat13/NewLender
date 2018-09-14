@@ -25,6 +25,7 @@ import { BorrowDetailPage } from '../pages/borrow-detail/borrow-detail';
 import { RequestReturnPage } from '../pages/request-return/request-return';
 import { ConfirmReturnPage } from '../pages/confirm-return/confirm-return';
 import { SearchItemsPage } from '../pages/search-items/search-items';
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { SearchItemsPage } from '../pages/search-items/search-items';
     SplashScreen,
     HttpClient,
     BarcodeScanner,
+    Camera,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

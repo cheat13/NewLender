@@ -9,6 +9,7 @@ export class Item {
     totalAmount: number
     borrowAmount: number
     returnAmount: number
+    img:string;
 }
 
 export class Lender {

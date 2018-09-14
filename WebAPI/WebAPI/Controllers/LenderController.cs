@@ -54,6 +54,13 @@ namespace WebAPI.Controllers
             return locker;
         }
 
+        [HttpGet("[action]/{name}")]
+        public Locker GetLockerByName(string name)
+        {
+            var locker = Locker.Find(x => x.Name == name).FirstOrDefault();
+            return locker;
+        }
+
         [HttpPost("[action]")]
         public void CreateLocker([FromBody]Locker locker)
         {
@@ -96,6 +103,13 @@ namespace WebAPI.Controllers
             return item;
         }
 
+        [HttpGet("[action]/{name}")]
+        public Item GetItemByName(string name)
+        {
+            var item = Item.Find(x => x.Name == name).FirstOrDefault();
+            return item;
+        }
+
         [HttpPost("[action]")]
         public void CreateItem([FromBody]Item item)
         {
@@ -109,7 +123,8 @@ namespace WebAPI.Controllers
         [HttpPost("[action]")]
         public void EditItem([FromBody]Item item)
         {
-
+            var _item = GetItem(item.Id);
+            item.TotalAmount += item.Amount - _item.Amount;
             Item.ReplaceOne(x => x.Id == item.Id, item);
         }
 

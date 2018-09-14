@@ -146,25 +146,25 @@
     </ion-row>
 
     <div *ngFor="let return of returnList">
-        <button ion-item (click)="ReturnDetail(return)">
-          <ion-row>
-            <ion-col col-8>
-              <div *ngFor="let item of return.items">
-                <ion-row *ngIf="item.returnAmount !=0">
-                  <ion-col col-6>
-                    {{item.name}}
-                  </ion-col>
-                  <ion-col col-6 style="text-align: center">
-                    {{item.returnAmount}}
-                  </ion-col>
-                </ion-row>
-              </div>
-            </ion-col>
-            <ion-col col-4 style="text-align: right;align-self: center">
-              {{return.lockerName}}
-            </ion-col>
-          </ion-row>
-        </button>
+      <button ion-item (click)="ReturnDetail(return)">
+        <ion-row>
+          <ion-col col-8>
+            <div *ngFor="let item of return.items">
+              <ion-row *ngIf="item.returnAmount !=0">
+                <ion-col col-6>
+                  {{item.name}}
+                </ion-col>
+                <ion-col col-6 style="text-align: center">
+                  {{item.returnAmount}}
+                </ion-col>
+              </ion-row>
+            </div>
+          </ion-col>
+          <ion-col col-4 style="text-align: right;align-self: center">
+            {{return.lockerName}}
+          </ion-col>
+        </ion-row>
+      </button>
     </div>
 
   </ion-grid>
@@ -178,10 +178,14 @@
 <ion-footer>
   <ion-grid style="background-color: #f53d3d ;height: 65px; text-align: center; padding-top: 2px; ">
     <ion-row>
-      <ion-col col-4>
-        <button style="background-color: unset;color: white;padding-top: 5px" (click)="KeyList()">
-          <ion-icon name="key" style="zoom: 1.5"></ion-icon><br>
-          Keylist
+      <ion-col col-4 no-padding>
+        <button style="background-color: unset;color: white;padding-top: 3px" (click)="KeyList()">
+          <ion-row>
+            <ion-col col-12 style="text-align: center">
+              <ion-icon name="key" style="zoom: 1.5"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>Keylist</ion-row>
         </button>
       </ion-col>
       <ion-col col-4>
@@ -190,9 +194,14 @@
         </button>
       </ion-col>
       <ion-col col-4>
-        <button style="background-color: unset;color: white;padding-top: 8px" (click)="Search()">
-          <ion-icon name="search" style="zoom: 1.5"></ion-icon><br>
-          Search
+        <button style="background-color: unset;color: white" (click)="Search()">
+          <ion-row>
+            <ion-col col-12 style="text-align: center">
+              <ion-icon name="search" style="zoom: 1.5"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>Search</ion-row>
+
         </button>
       </ion-col>
     </ion-row>

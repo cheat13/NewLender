@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Item, GlobalVarible } from '../../app/models';
+import { ItemDetailPage } from '../item-detail/item-detail';
 
 @IonicPage()
 @Component({
@@ -11,27 +12,32 @@ import { Item, GlobalVarible } from '../../app/models';
 export class SearchItemsPage {
 
   items;
+  Items: Item[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient) {
-    this.initializeItems()
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchItemsPage');
   }
 
-  initializeItems() {
+  ionViewDidEnter() {
     this.http.get<Item[]>(GlobalVarible.host + "/api/Lender/GetAllItem")
       .subscribe(data => {
-        this.items = data;
+        this.Items = data;
+        this.initializeItems()
       });
+
   }
 
-
+  initializeItems() {
+    this.items = this.Items;
+  }
 
   getItems(ev) {
     // Reset items back to all of the items
-
+    this.initializeItems()
     // set val to the value of the ev target
     var val = ev.target.value;
 
@@ -41,8 +47,9 @@ export class SearchItemsPage {
         return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
-    else {
-      this.initializeItems()
-    }
+  }
+
+  ItemDetail(id: string) {
+    this.navCtrl.push(ItemDetailPage, { _id: id });
   }
 }

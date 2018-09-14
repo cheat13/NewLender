@@ -15,5 +15,6 @@ namespace WebAPI.Models
         public int TotalAmount { get; set; }
         public int BorrowAmount { get; set; }
         public int ReturnAmount { get; set; }
+        public string Img { get; set; }
     }
 }
