@@ -13,9 +13,8 @@ export class LoginPage {
 
   lender: Lender = new Lender;
   name: any;
-  wait: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient, public toastCtrl: ToastController,public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
 
   }
 
@@ -32,22 +31,16 @@ export class LoginPage {
             this.lender = new Lender;
             this.lender.name = this.name;
 
-            this.http.post(GlobalVarible.host + "/api/Lender/CreateUser", this.lender)
+            this.http.post<Lender>(GlobalVarible.host + "/api/Lender/CreateUser", this.lender)
               .subscribe(data => {
-
-                this.http.get<Lender>(GlobalVarible.host + "/api/Lender/GetUser/" + this.lender.name)
-                  .subscribe(data => {
-                    this.lender = data;
-                    GlobalVarible.lender = this.lender;
-                    this.navCtrl.push(HomePage);
-                    this.wait = true;
-                  });
+                this.lender = data;
+                GlobalVarible.lender = this.lender;
+                this.navCtrl.push(HomePage);
               });
           }
           else {
             GlobalVarible.lender = this.lender;
             this.navCtrl.push(HomePage);
-            this.wait = true;
           }
         });
     }

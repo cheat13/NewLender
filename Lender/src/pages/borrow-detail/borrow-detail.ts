@@ -50,32 +50,39 @@ export class BorrowDetailPage {
       toast.present();
     }
     else {
-      this.returnList.borrowListId = this.borrowList.id;
-      this.returnList.items = this.borrowList.items;
+      if (this.borrowList.items.find(x => x.returnAmount > x.borrowAmount || x.returnAmount < 0) == null) {
+        this.returnList.borrowListId = this.borrowList.id;
+        this.returnList.items = this.borrowList.items;
 
-      this.barcodeScanner.scan().then(barcodeData => {
-        console.log('Barcode data', barcodeData);
-        if (barcodeData.text == this.returnList.lockerId) {
-          this.http.post<ReturnList>(GlobalVarible.host + "/api/Lender/CreateReturn", this.returnList)
-            .subscribe(data => {
-              this.returnList = data;
-              console.log(this.returnList)
-              this.navCtrl.push(RequestReturnPage, { _returnList: this.returnList })
+        this.barcodeScanner.scan().then(barcodeData => {
+          console.log('Barcode data', barcodeData);
+          if (barcodeData.text == this.returnList.lockerId) {
+            this.http.post<ReturnList>(GlobalVarible.host + "/api/Lender/CreateReturn", this.returnList)
+              .subscribe(data => {
+                this.returnList = data;
+                console.log(this.returnList)
+                this.navCtrl.push(RequestReturnPage, { _returnList: this.returnList })
+              });
+          }
+          else {
+            const toast = this.toastCtrl.create({
+              message: 'Worng locker. Please scan locker ' + this.returnList.lockerName,
+              duration: 3000
             });
-        }
-        else {
-          const toast = this.toastCtrl.create({
-            message: 'Worng locker. Please scan locker '+ this.returnList.lockerName,
-            duration: 3000
-          });
-          toast.present();
-        }
+            toast.present();
+          }
 
-      }).catch(err => {
-        console.log('Error', err);
-      });
-
-
+        }).catch(err => {
+          console.log('Error', err);
+        });
+      }
+      else {
+        const toast = this.toastCtrl.create({
+          message: 'Please check input return amount.',
+          duration: 3000
+        });
+        toast.present();
+      }
     }
 
   }

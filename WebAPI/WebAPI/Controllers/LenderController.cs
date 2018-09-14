@@ -144,10 +144,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("[action]")]
-        public void CreateUser([FromBody]Lender lender)
+        public Lender CreateUser([FromBody]Lender lender)
         {
             lender.Id = Guid.NewGuid().ToString();
             Lender.InsertOne(lender);
+            return lender;
         }
 
         /// BorrowList
@@ -223,7 +224,7 @@ namespace WebAPI.Controllers
 
             foreach (var item in items)
             {
-                EditItem(item);
+                Item.ReplaceOne(x => x.Id == item.Id, item);
             }
             
             BorrowList.ReplaceOne(x => x.Id == borrow.Id, borrow);
@@ -303,7 +304,7 @@ namespace WebAPI.Controllers
 
             foreach (var item in items)
             {
-                EditItem(item);
+                Item.ReplaceOne(x => x.Id == item.Id, item);
             }
 
             BorrowList borrowList = GetBorrow(returnList.BorrowListId);

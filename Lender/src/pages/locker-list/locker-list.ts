@@ -62,12 +62,21 @@ export class LockerListPage {
       toast.present();
     }
     else {
-      this.http.post<BorrowList>(GlobalVarible.host + "/api/Lender/CreateBorrow", this.borrow)
-        .subscribe(data => {
-          this.borrow = data;
-          console.log(this.borrow)
-          this.navCtrl.push(RequestBorrowPage, { _borrow: this.borrow })
+      if (this.borrow.items.find(x => x.borrowAmount > x.amount || x.borrowAmount < 0) == null) {
+        this.http.post<BorrowList>(GlobalVarible.host + "/api/Lender/CreateBorrow", this.borrow)
+          .subscribe(data => {
+            this.borrow = data;
+            console.log(this.borrow)
+            this.navCtrl.push(RequestBorrowPage, { _borrow: this.borrow })
+          });
+      }
+      else {
+        const toast = this.toastCtrl.create({
+          message: 'Please check input borrow amount.',
+          duration: 3000
         });
+        toast.present();
+      }
     }
 
   }

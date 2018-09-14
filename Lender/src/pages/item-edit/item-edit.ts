@@ -33,7 +33,7 @@ export class ItemEditPage {
     this.http.get<Item>(GlobalVarible.host + "/api/Lender/GetItemByName/" + this.item.name)
       .subscribe(data => {
         this._item = data;
-        if (this._item == null) {
+        if (this._item == null || this._item.name == this.item.name) {
           if (this.item.name == '' || this.item.amount == 0) {
             const toast = this.toastCtrl.create({
               message: 'Please fill in information.',

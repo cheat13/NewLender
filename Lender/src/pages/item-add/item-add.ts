@@ -28,7 +28,7 @@ export class ItemAddPage {
       .subscribe(data => {
         this._item = data;
         if (this._item == null) {
-          if (this.item.name == null || this.item.name == '' || this.item.amount == null || this.item.amount == 0) {
+          if (this.item.name == null || this.item.name == '' || this.item.totalAmount == null || this.item.totalAmount == 0) {
             const toast = this.toastCtrl.create({
               message: 'Please fill in information.',
               duration: 3000
