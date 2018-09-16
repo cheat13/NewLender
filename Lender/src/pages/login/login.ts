@@ -15,8 +15,7 @@ export class LoginPage {
   lender: Lender = new Lender;
   lenderName : string;
   password : string;
-  // name: any;
-  // login: boolean = false;
+  login: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
 
@@ -27,7 +26,7 @@ export class LoginPage {
   }
 
   Login() {
-    // this.login = true;
+    this.login = true;
     // if (this.name != null) {
     //   this.http.get<Lender>(GlobalVarible.host + "/api/Lender/GetUser/" + this.name)
     //     .subscribe(data => {
@@ -65,8 +64,9 @@ export class LoginPage {
       this.http.get<Lender>(GlobalVarible.host + "/api/Lender/GetUser/" + this.lender.name)
         .subscribe(data => {
           if (data == null) {
+            this.login = false;
             const toast = this.toastCtrl.create({
-              message: 'ไม่พบบัญชีผู้ใช้กรุณาสมัครบัญชี',
+              message: 'This Username can not found.',
               duration: 3000
             });
             toast.present();
@@ -78,8 +78,9 @@ export class LoginPage {
               this.navCtrl.push(HomePage);
             }
             else {
+              this.login = false;
               const toast = this.toastCtrl.create({
-                message: 'Username หรือ Password ไม่ถูกต้อง ',
+                message: 'Username or Password invalid.',
                 duration: 3000
               });
               toast.present();
@@ -91,8 +92,9 @@ export class LoginPage {
         });
     }
     else {
+      this.login = false;
       const toast = this.toastCtrl.create({
-        message: 'กรุณากรอก Username และ Password ให้ครบ',
+        message: 'Please enter Username and Password to complete.',
         duration: 3000
       });
       toast.present();

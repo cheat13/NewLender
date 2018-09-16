@@ -21,7 +21,8 @@ export class SignUpPage {
   lender: Lender = new Lender;
   LanderName: string;
   password: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public toastCtrl: ToastController, public http: HttpClient) {
+  signup: boolean = false;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public http: HttpClient) {
   }
 
   ionViewDidLoad() {
@@ -30,7 +31,7 @@ export class SignUpPage {
 
 
   SignUp() {
-
+    this.signup = true;
     if (this.LanderName != null && this.password != null) {
 
       this.lender.name = this.LanderName.toUpperCase();
@@ -39,7 +40,7 @@ export class SignUpPage {
 
       this.http.get<Lender>(GlobalVarible.host + "/api/Lender/GetUser/" + this.lender.name)
         .subscribe(data => {
-        
+
           if (data == null) {
             this.http.post(GlobalVarible.host + "/api/Lender/CreateUser", this.lender)
               .subscribe(data => {
@@ -48,8 +49,9 @@ export class SignUpPage {
               });
           }
           else {
+            this.signup = false;
             const toast = this.toastCtrl.create({
-              message: 'มีชื่อผู้ใช้นี้แล้วในระบบ',
+              message: 'Username has already.',
               duration: 3000
             });
             toast.present();
@@ -59,8 +61,9 @@ export class SignUpPage {
     }
 
     else {
+      this.signup = false;
       const toast = this.toastCtrl.create({
-        message: 'กรุณากรอก Username และ Password ให้ครบ',
+        message: 'Please enter Username and Password to complete.',
         duration: 3000
       });
       toast.present();
