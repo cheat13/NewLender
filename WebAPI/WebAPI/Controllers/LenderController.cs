@@ -142,6 +142,11 @@ namespace WebAPI.Controllers
         }
 
         /// User
+        [HttpGet("[action]")]
+        public IEnumerable<Lender> GetAllUser() {
+            var getAllUser = Lender.Find(x => true).ToList();
+            return getAllUser;
+        }
 
         [HttpGet("[action]/{name}")]
         public Lender GetUser(string name)

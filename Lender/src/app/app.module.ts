@@ -26,6 +26,7 @@ import { RequestReturnPage } from '../pages/request-return/request-return';
 import { ConfirmReturnPage } from '../pages/confirm-return/confirm-return';
 import { SearchItemsPage } from '../pages/search-items/search-items';
 import { Camera } from '@ionic-native/camera';
+import { SignUpPage } from '../pages/sign-up/sign-up';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { Camera } from '@ionic-native/camera';
     BorrowDetailPage,
     RequestReturnPage,
     ConfirmReturnPage,
-    SearchItemsPage
+    SearchItemsPage,
+    SignUpPage
   ],
   imports: [
     BrowserModule,
@@ -72,7 +74,8 @@ import { Camera } from '@ionic-native/camera';
     BorrowDetailPage,
     RequestReturnPage,
     ConfirmReturnPage,
-    SearchItemsPage
+    SearchItemsPage,
+    SignUpPage
   ],
   providers: [
     StatusBar,
