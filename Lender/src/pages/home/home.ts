@@ -38,6 +38,8 @@ export class HomePage {
     this.http.get<BorrowList[]>(GlobalVarible.host + "/api/Lender/GetBorrowLender/" + GlobalVarible.lender.id)
       .subscribe(data => {
         this.borrows = data;
+        console.log(this.borrows);
+        
         if (this.borrows.length == 0) {
           this.status = false;
         }

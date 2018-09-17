@@ -13,8 +13,8 @@ import { SignUpPage } from '../sign-up/sign-up';
 export class LoginPage {
 
   lender: Lender = new Lender;
-  lenderName : string;
-  password : string;
+  lenderName: string;
+  password: string;
   login: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
@@ -74,8 +74,11 @@ export class LoginPage {
           }
           else {
             if (data.name == this.lender.name && data.password == this.lender.password) {
-              GlobalVarible.lender = this.lender;
-              this.navCtrl.push(HomePage);
+              this.http.get<Lender>(GlobalVarible.host + "/api/Lender/GetUser/" + this.lender.name)
+                .subscribe(data => {
+                  GlobalVarible.lender = data;
+                  this.navCtrl.push(HomePage);
+                });
             }
             else {
               this.login = false;

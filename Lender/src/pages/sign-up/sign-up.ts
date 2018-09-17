@@ -44,8 +44,11 @@ export class SignUpPage {
           if (data == null) {
             this.http.post(GlobalVarible.host + "/api/Lender/CreateUser", this.lender)
               .subscribe(data => {
-                GlobalVarible.lender = this.lender;
-                this.navCtrl.push(HomePage);
+                this.http.get<Lender>(GlobalVarible.host + "/api/Lender/GetUser/" + this.lender.name)
+                  .subscribe(data => {
+                    GlobalVarible.lender = data;
+                    this.navCtrl.push(HomePage);
+                  });
               });
           }
           else {
