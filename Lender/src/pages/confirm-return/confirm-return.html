@@ -83,16 +83,24 @@
 <ion-footer>
   <ion-grid no-padding style="  text-align: center">
     <ion-row>
-      <ion-col col-6 style="background-color:#222">
-        <button style="background-color: unset;color: white" (click)="CancelReturn()">
+      <ion-col col-6 style="background-color:#222" (click)="CancelReturn()">
+        <button style="background-color: unset;color: white" >
           <h5>Cancel</h5>
         </button>
       </ion-col>
-      <ion-col col-6 style="background-color: rgb(250, 115, 7)">
-        <button style="background-color: unset;color: white" (click)="ConfirmReturn()">
+
+      <ion-col col-6 style="background-color: rgb(250, 115, 7)" (click)="ConfirmReturn()" *ngIf="status == false">
+        <button style="background-color: unset;color: white" >
           <h5>Confirm</h5>
         </button>
       </ion-col>
+
+      <ion-col col-6 style="background-color: #f53d3d" *ngIf="status == true">
+        <button style="background-color: unset;color: white" >
+          <h5>Confirm</h5>
+        </button>
+      </ion-col>
+
     </ion-row>
   </ion-grid>
 </ion-footer>

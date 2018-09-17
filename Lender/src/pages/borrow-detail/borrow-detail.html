@@ -96,7 +96,7 @@
               <ion-col col-4 style="text-align: right">
                 <ion-list>
                   <ion-item>
-                    <ion-input type="number" placeholder="{{_item.returnAmount}}" [(ngModel)]="_item.returnAmount"></ion-input>
+                    <ion-input type="number" placeholder="0" [(ngModel)]="_item.returnAmount"></ion-input>
                   </ion-item>
                 </ion-list>
               </ion-col>
@@ -111,9 +111,9 @@
   
   <ion-footer>
     <ion-grid no-padding style="  text-align: center">
-      <ion-row>
+      <ion-row (click)="Return()">
         <ion-col col-12 style="background-color: #f53d3d">
-          <button style="background-color: unset;color: white" (click)="Return()">
+          <button style="background-color: unset;color: white" >
             <h5>Return</h5>
           </button>
         </ion-col>

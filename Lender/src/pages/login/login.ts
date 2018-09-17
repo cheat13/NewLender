@@ -25,6 +25,10 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
 
+  ionViewDidEnter() {
+    this.login = false;
+  }
+
   Login() {
     this.login = true;
     // if (this.name != null) {

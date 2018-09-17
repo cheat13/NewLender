@@ -14,7 +14,8 @@ export class LockerListPage {
   items: Item[] = [];
   locker: Locker = new Locker;
   borrow: BorrowList = new BorrowList;
-  status: boolean = false;
+  status: boolean;
+  checkItems: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient, public toastCtrl: ToastController) {
 
@@ -25,6 +26,7 @@ export class LockerListPage {
   }
 
   ionViewDidEnter() {
+    this.status = false;
     this.borrow.lenderId = GlobalVarible.lender.id;
     this.borrow.lenderName = GlobalVarible.lender.name;
     this.http.get<Locker>(GlobalVarible.host + "/api/Lender/GetLocker/" + this.navParams.data._lockerId)
@@ -37,6 +39,14 @@ export class LockerListPage {
           .subscribe(data => {
             this.items = data;
             console.log(this.items);
+
+            if (this.items.find(x => x.amount != 0) == null) {
+              this.checkItems = false;
+            }
+            else {
+              this.checkItems = true;
+            }
+
           });
       });
   }

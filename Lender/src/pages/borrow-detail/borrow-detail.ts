@@ -42,6 +42,7 @@ export class BorrowDetailPage {
   }
 
   Return() {
+
     if (this.borrowList.items.find(x => x.returnAmount != 0) == null) {
       const toast = this.toastCtrl.create({
         message: 'Please input return amount.',

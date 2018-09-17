@@ -122,8 +122,6 @@ namespace WebAPI.Controllers
         {
             item.Id = Guid.NewGuid().ToString();
             item.Amount = item.TotalAmount;
-            item.BorrowAmount = 0;
-            item.ReturnAmount = 0;
             Item.InsertOne(item);
         }
 

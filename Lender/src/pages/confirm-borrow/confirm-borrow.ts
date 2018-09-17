@@ -18,6 +18,7 @@ import { BorrowList, GlobalVarible } from '../../app/models';
 export class ConfirmBorrowPage {
 
   borrow: BorrowList = new BorrowList;
+  status: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient) {
   }
@@ -31,6 +32,7 @@ export class ConfirmBorrowPage {
       .subscribe(data => {
         this.borrow = data;
       });
+    this.status = false;
   }
 
   CancelBorrow() {
@@ -41,6 +43,7 @@ export class ConfirmBorrowPage {
   }
 
   ConfirmBorrow() {
+    this.status = true;
     this.borrow.buddyId = GlobalVarible.lender.id;
     this.borrow.buddyName = GlobalVarible.lender.name;
     this.http.post(GlobalVarible.host + "/api/Lender/ConfirmBorrow", this.borrow)
